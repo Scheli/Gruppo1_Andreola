@@ -1,3 +1,9 @@
+/*qui ho fatto in modo che le card di tipo .col-md4 vengano temporaneamente rimosse dalla tabella se non rispettano i paramentri
+di ricerca. la ricerca parte in seguito al click del pulsante e mostra tutti gli sport che inziano con le determinate lettere inserite*/ 
+
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.querySelector('.form-control');
     const searchButton = document.getElementById('button-addon1');
@@ -10,14 +16,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const cardTitle = card.querySelector('.card-title').textContent.trim().toLowerCase();
 
             if (cardTitle.startsWith(searchTerm)) {
-                card.style.order = '-1'; // Sposta la carta corrispondente a sinistra
-                card.style.display = 'block'; // Mostra la carta corrispondente
+                card.style.order = '-1'; 
+                card.style.display = 'block'; 
             } else {
-                card.style.order = 'unset'; // Ripristina l'ordine predefinito
-                card.style.display = 'none'; // Nasconde la carta non corrispondente
+                card.style.order = 'unset'; 
+                card.style.display = 'none';
             }
         });
 
-        searchInput.value = ''; // Resetta il campo di ricerca dopo la ricerca
+        searchInput.value = ''; 
     });
 });
