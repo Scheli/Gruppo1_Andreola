@@ -13,11 +13,12 @@ body {
 }
 .swiper-container {
   width: 100%;
-  height: 500px;
+  height: 100%;
 }
 
 .swiper-slide img {
-  width: 150px !important; 
+  width: 100px !important;
+  position: center; 
   height: auto !important; 
   object-fit: contain; 
   border: 2px solid #fff; 
@@ -29,7 +30,6 @@ swiper-slide {
   justify-content: center;
   align-items: center;
 }
-
 
 .navbar-brand img {
   width: 400px;
