@@ -112,3 +112,11 @@ swiper-slide img {
   transform: scaleX(0); 
   transition: transform 0.3s ease;
 }
+
+.card{
+  background-color: transparent;
+}
+
+.card,p,h2{
+  color: white;
+}
