@@ -1,5 +1,5 @@
 // Importare le funzioni necessarie da mongo.js (assumendo che mongo.js sia nello stesso directory o correttamente referenziato)
-import { connectToDB, createOne } from './mongo.js';
+import { connectToDB, createOne } from './db.js';
 
 
 
