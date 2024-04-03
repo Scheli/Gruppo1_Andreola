@@ -120,3 +120,35 @@ swiper-slide img {
 .card,p,h2{
   color: white;
 }
+
+@media (min-width: 768px) {
+  swiper-container {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 100%;
+    height: 30%;
+  }
+  
+  swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  swiper-slide img {
+    display: block;
+    position: center;
+    width: 500px;
+    height: 170px;
+    object-fit: cover;
+  }
+  .col-md-4 {
+    width: 50%;
+    padding-top: 4px; 
+    padding: 1; 
+    }
+}
+
+
