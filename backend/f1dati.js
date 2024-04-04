@@ -6,26 +6,42 @@ import { connectToDB, createOne } from './db.js';
 
 
 
+//<script>
+
 async function result() {
-    let results = []; 
+    
     const db = await connectToDB(); 
 
-    for (let i = 1; i <= 20; i++) {
-        const risposta = await fetch(`https://api.openf1.org/v1/position?session_key=9468&position=${i}`, {
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
 
-        let res = await risposta.json();
-        results.push(res[res.length - 1]);
+    
+  for (let i = 2000; i <= 2024; i++) {
+        
+        const risposta = await fetch (`https://ergast.com/api/f1/${i}.json`)
+        
+        const seasons = await risposta.json()
+        console.log(seasons)
+        console.log(seasons.MRData.total)
+        
 
-        // Inserire ogni risultato nel DB
-        await createOne(db, "Formula1", res[res.length - 1]); 
+        for (let j = 1; j <= seasons.MRData.total; j++) {
+            const risposta = await fetch(`http://ergast.com/api/f1/${i}/${j}/results.json`, {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            let res = await risposta.json();
+            console.log(res.MRData.RaceTable);
+            //results.push(res);
+        
+
+            // Inserire ogni risultato nel DB
+            await createOne(db, "Result", res.MRData.RaceTable); 
+        }
     }
-
     // Opzionale: Stampa di verifica
     console.log("Dati inseriti con successo");
 }
 
 result();
+//</script>
