@@ -16,9 +16,20 @@ app.get('/:resource/:id', async (req, res) => {
     if (result) {
         res.json(result)
     } else {
-        res.status(404).json({ message: "prodotto non trovato" })
+        res.status(404).json({ message: "errore" })
     }
 })
+
+app.get('/:resource/:season', async (req,res) =>{
+    const season = req.params.season; 
+    const resource = req.params.resource;
+    const result = await getOneseason(db, resource, season);
+    if(result){
+        res.json(result);
+    } else{
+        res.status(404).json({message: "errore"});
+    }
+});
 
 app.get('/:resource', async (req,res)=>{
     const resource = req.params.resource
