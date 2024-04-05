@@ -19,9 +19,11 @@ async function result() {
         const risposta = await fetch (`https://ergast.com/api/f1/${i}.json`)
         
         const seasons = await risposta.json()
+        
         console.log(seasons)
+        await createOne (db, "Calendar",seasons.MRData.RaceTable)
         console.log(seasons.MRData.total)
-
+        
         const ds = await fetch(`http://ergast.com/api/f1/${i}/driverStandings.json`,{
             headers: {
                 'Accept': 'application/json'

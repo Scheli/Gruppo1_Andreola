@@ -1,9 +1,10 @@
 import express from 'express'
 import cors from 'cors'
-import {getAll, getOne,connectToDB } from './db.js'
+import {getAll, getOne,connectToDB,getOneseason } from './db.js'
 
 const app = express()
 let db; //db connection
+//const { ObjectId } = require('mongodb');
 
 app.use(express.json())
 app.use(cors())
@@ -20,13 +21,17 @@ app.get('/:resource/:id', async (req, res) => {
     }
 })
 
-app.get('/:resource/:season', async (req,res) =>{
-    const season = req.params.season; 
-    const resource = req.params.resource;
+app.get('/standings', async (req, res) => {
+
+    const resource = req.query.resource; 
+    const season = req.query.season; 
+    
+    // Convert season to BSON ObjectIdx
+    
     const result = await getOneseason(db, resource, season);
-    if(result){
+    if (result) {
         res.json(result);
-    } else{
+    } else {
         res.status(404).json({message: "errore"});
     }
 });
