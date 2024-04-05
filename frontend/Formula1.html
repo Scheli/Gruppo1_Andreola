@@ -27,26 +27,19 @@
       </div>
     </div>
   </nav>
-  <!-- <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img style="max-width: 300px;" src="https://yt3.googleusercontent.com/BHfbCbg4x6VgO5sEDv0E5odG2ML9NOYxuDN8r91FhI1j0HFu2ulIus3j2D4M-7fdQvwBrgXX=s900-c-k-c0x00ffffff-no-rj" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="immagini/logo-removebg-preview.png" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="immagini/logo-removebg-preview.png" class="d-block w-100" alt="...">
-            </div>
-        </div>
-    </div> -->
 
-  <!-- <swiper-container class="mySwiper" navigation="true" pagination="true" keyboard="true" mousewheel="true"
-    css-mode="true">
-    <swiper-slide><img src="" alt=""></swiper-slide>
-    <swiper-slide><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/UFC_Logo.svg/2560px-UFC_Logo.svg.png" alt=""></swiper-slide>
-    <swiper-slide><img src="immagini/PFL.png" alt=""></swiper-slide>
-  </swiper-container> -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="selectYear">Seleziona l'anno</label>
+          <select class="form-select" id="selectYear">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     <div class="row">
       <div class="col">
@@ -56,9 +49,11 @@
               <div class="row">
                 <div class="col"></div>
               </div>
+              <div id="previousRaceSection"></div>
+
             </div>
             <div class="above-border border border-warning text-warning">
-              gare precedenti
+              Gare precedenti
             </div>
           </div>
         </div>
@@ -70,6 +65,8 @@
               <div class="row">
                 <div class="col"></div>
               </div>
+<div id="nextRaceSection"></div>
+
             </div>
             <div class="above-border border border-warning text-warning">
               Prossime gare
@@ -128,6 +125,7 @@
 
     </div>
   </div>
+  <script src="Formula1.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
