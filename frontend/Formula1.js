@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 async function fetchRaceData(selectedYear) {
-    const response = await fetch(`http://localhost:8080/races/${selectedYear}`);
+    const response = await fetch(`http://localhost:8080/season?resource=Race&season=${selectedYear}`);
     const raceData = await response.json();
 
     updateRaceSection(raceData.previousYear, 'previous');
