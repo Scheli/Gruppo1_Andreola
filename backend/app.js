@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import {getAll, getOne,connectToDB,getOneseason,getOnerace } from './db.js'
+import { getAll, getOne, connectToDB, getOnerace, getSeason } from './db.js'
 
 const app = express()
 let db; //db connection
@@ -23,36 +23,46 @@ app.get('/:resource/:id', async (req, res) => {
 
 app.get('/standing', async (req, res) => {
 
-    const resource = req.query.resource; 
-    const season = req.query.season; 
+    const resource = req.query.resource;
+    const season = req.query.season;
     // Convert season to BSON ObjectIdx
-    
+
     const result = await getOneseason(db, resource, season);
     if (result) {
         res.json(result);
     } else {
-        res.status(404).json({message: "errore"});
+        res.status(404).json({ message: "errore" });
     }
 });
 
 app.get('/result', async (req, res) => {
 
-    const resource = req.query.resource; 
-    const season = req.query.season; 
+    const resource = req.query.resource;
+    const season = req.query.season;
     const round = req.query.round
-    // Convert season to BSON ObjectIdx
-    
-    const result = await getOnerace(db, resource, season,round);
+
+    const result = await getOnerace(db, resource, season, round);
     if (result) {
         res.json(result);
     } else {
-        res.status(404).json({message: "errore"});
+        res.status(404).json({ message: "errore" });
     }
 });
 
+app.get('/resultseason', async (req, res) => {
+    const resource = req.query.resource;
+    const season = req.query.season;
 
+    const result = await getSeason(db, resource, season);
 
-app.get('/:resource', async (req,res)=>{
+    if (result) {
+        res.json(result);
+    } else {
+        res.status(404).json({ message: "errore" });
+    }
+})
+
+app.get('/:resource', async (req, res) => {
     const resource = req.params.resource
     const result = await getAll(db, resource)
     res.json(result)

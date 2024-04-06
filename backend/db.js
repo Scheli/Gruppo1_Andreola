@@ -26,8 +26,8 @@ export async function getOne(db, resource, id) {
     return data
 }
 
-export async function getOneseason(db, resource, season) {
-    const data = await db.collection(resource).findOne({"season": season})
+export async function getSeason(db, resource, season) {
+    const data = await db.collection(resource).find({"season": season}).toArray();
     return data
 }
 
