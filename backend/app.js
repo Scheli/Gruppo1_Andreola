@@ -21,19 +21,6 @@ app.get('/:resource/:id', async (req, res) => {
     }
 })
 
-app.get('/standing', async (req, res) => {
-
-    const resource = req.query.resource;
-    const season = req.query.season;
-    // Convert season to BSON ObjectIdx
-
-    const result = await getOneseason(db, resource, season);
-    if (result) {
-        res.json(result);
-    } else {
-        res.status(404).json({ message: "errore" });
-    }
-});
 
 app.get('/result', async (req, res) => {
 
@@ -49,7 +36,7 @@ app.get('/result', async (req, res) => {
     }
 });
 
-app.get('/resultseason', async (req, res) => {
+app.get('/season', async (req, res) => {
     const resource = req.query.resource;
     const season = req.query.season;
 
