@@ -31,6 +31,11 @@ export async function getOneseason(db, resource, season) {
     return data
 }
 
+export async function getOnerace(db, resource, season,round) {
+    const data = await db.collection(resource).findOne({"season": season,"round":round})
+    return data
+}
+
 export async function createOne(db,resource,newItem){
     const data = await db.collection(resource).insertOne(newItem)
     if (data?.acknowledged) {
