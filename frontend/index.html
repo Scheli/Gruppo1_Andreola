@@ -147,6 +147,22 @@
       </div>
     </div>
   </footer>
+  <div class="bot-container">
+    <div class="chat-box" id="chatBox">
+      <button class="close-button" onclick="toggleChatBox()">X</button>
+      <div class="message" id="chatMessages">
+        <img src="immagini/logo.png" alt="Benvenuto" class="welcome-image">
+        <div class="bot-message">Benvenuto nella chat! Inizia a chattare qui.</div>
+        <div class="bot-message">Ora di inizio chat: <span id="startTime"></span></div>
+      </div>
+      <div class="chat-buttons">
+        <button class="chat-button" onclick="insertText('ricerca')">Aiuto con ricerca</button>
+        <button class="chat-button" onclick="insertText('navbar e card')">navbar</button>
+        <button class="chat-button" onclick="insertText('fonti')">fonti?</button>
+      </div>
+    </div>
+    <img src="immagini/logo.png" id="logo" alt="Logo-insdie" onclick="openChatBox()">
+  </div>
 
   <script src="index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

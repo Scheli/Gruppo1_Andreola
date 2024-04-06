@@ -73,3 +73,91 @@ footer {
     background-color: #000;
     color: #fff;
 }
+
+.bot-container {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+}
+
+
+.chat-box {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 350px;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: black;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 9999;
+}
+
+
+
+#chatMessages {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.chat-buttons {
+    margin-top: 10px;
+}
+
+.chat-button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.message {
+    margin-top: 10px;
+}
+
+.user-message {
+    color: blue;
+}
+
+.bot-message {
+    color: green;
+}
+
+.welcome-image {
+    max-width: 60%;
+    height: auto;
+}
+
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+
+
+#logo {
+    width: 80px;
+    height: auto;
+    cursor: pointer;
+}
