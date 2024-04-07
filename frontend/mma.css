@@ -37,7 +37,9 @@ swiper-slide img {
   width: 400px;
   height: auto;
 }
-
+.navbar{
+  background: #000000;
+}
 .navbar-custom {
   background-color: #222;
 }
