@@ -122,3 +122,18 @@ function scrollChatToBottom() {
     var chatMessages = document.getElementById("chatMessages");
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
+
+ function toggleDarkMode() {
+     var body = document.body;
+     var button = document.getElementById('dark-mode-btn');
+     if (body.classList.contains('dark-mode')) {
+         body.classList.remove('dark-mode');
+         button.innerHTML = "Dark mode";
+     } else {
+         body.classList.add('dark-mode');
+         button.innerHTML = "Light mode";
+     }
+ }
+ window.onload = function() {
+     toggleDarkMode();
+ };

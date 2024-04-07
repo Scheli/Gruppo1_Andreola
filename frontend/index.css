@@ -10,6 +10,12 @@
     background-color: #6c757d;
 }
 
+
+.btn:hover {
+    background-color: #000000;
+}
+
+
 .carousel-inner .carousel-item {
     transition: transform 5s ease;
 }
@@ -44,15 +50,26 @@
     justify-content: center;
     align-items: center;
 }
+.navbar-nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+#dark-mode-btn {
+    margin-left: auto;
+}
 
 .navbar-brand img {
     width: 100px;
     height: auto;
 }
+.navbar{
+    background-color: #000000;
+}
 
 .slogan-container {
-    position: absolute;
-    top: 40%;
+    position: fixed;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 80%;
@@ -68,6 +85,7 @@
         -2px 2px 0 black,
         2px 2px 0 black;
 }
+
 
 footer {
     background-color: #000;
@@ -117,11 +135,11 @@ footer {
 }
 
 .user-message {
-    color: blue;
+    color: rgb(255, 255, 255);
 }
 
 .bot-message {
-    color: green;
+    color: #FFD700;
 }
 
 .welcome-image {
@@ -161,3 +179,86 @@ footer {
     height: auto;
     cursor: pointer;
 }
+
+#dark-mode-btn {
+    background: white;
+    border-radius: 999px;
+    box-shadow: black 0 10px 20px -10px;
+    box-sizing: border-box;
+    color: black;
+    cursor: pointer;
+    font-family: Inter,Helvetica,"Apple C   olor Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    opacity: 1;
+    outline: 0 solid transparent;
+    padding: 8px 18px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: fit-content;
+    word-break: break-word;
+    border: 0;
+  }
+  
+  
+  #dark-mode-btn:hover {
+    background-color: black;
+    color: white;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    border-color: white;
+  }
+  
+  #dark-mode-btn i {
+    margin-right: 8px;
+  }
+  
+  body.dark-mode {
+    background-color: #222;
+    color: #fff;
+}
+
+body:not(.dark-mode) {
+    background-color: #ffffff;
+    color: #000;
+}
+body.dark-mode .navbar {
+    background-color: #000; 
+}
+
+body.dark-mode .navbar-nav .nav-link {
+    color: #fff;
+}
+
+body:not(.dark-mode) .navbar {
+    background-color: #95c7ba; 
+}
+
+body:not(.dark-mode) .navbar-nav .nav-link {
+    color: #000; 
+}
+body.dark-mode footer {
+    background-color: #000000;
+}
+body:not(.dark-mode) footer {
+    background-color: #95c7ba;
+}
+body.dark-mode table {
+    color: #ffffff;
+}
+
+
+body:not(.dark-mode) table {
+    color: #000000;
+}
+body.dark-mode p {
+    color: #ffffff;
+}
+
+body:not(.dark-mode) p {
+    color: #000000;
+}
+
+
+

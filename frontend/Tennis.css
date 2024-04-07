@@ -44,6 +44,9 @@ swiper-slide {
   width: 400px;
   height: auto;
 }
+.navbar{
+  background: #000000;
+}
 
 
 .above-border {
