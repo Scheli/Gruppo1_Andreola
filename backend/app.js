@@ -12,33 +12,32 @@ app.use(cors())
 
 
 
-app.get('/result', async (req, res) => {
 
+
+app.get('/f1', async (req,res) =>{
     const resource = req.query.resource;
     const season = req.query.season;
     const round = req.query.round
 
-    const result = await getOnerace(db, resource, season, round);
-    if (result) {
-        res.json(result);
-    } else {
-        res.status(404).json({ message: "errore" });
+    if (season && round) {
+        const result = await getOnerace(db, resource, season, round);
+        if (result) {
+            res.json(result);
+        } else {
+            res.status(404).json({ message: "errore" });
+        }
+        
+    } else if (season) {
+        const result = await getSeason(db, resource, season);
+
+        if (result) {
+            res.json(result);
+        } else {
+            res.status(404).json({ message: "errore" });
+        }
     }
-});
 
-app.get('/season', async (req, res) => {
-    const resource = req.query.resource;
-    const season = req.query.season;
-
-    const result = await getSeason(db, resource, season);
-
-    if (result) {
-        res.json(result);
-    } else {
-        res.status(404).json({ message: "errore" });
-    }
 })
-
 
 
 app.listen(8080, async () => {
