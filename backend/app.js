@@ -4,22 +4,12 @@ import { getAll, getOne, connectToDB, getOnerace, getSeason } from './db.js'
 
 const app = express()
 let db; //db connection
-//const { ObjectId } = require('mongodb');
+
 
 app.use(express.json())
 app.use(cors())
 
 
-app.get('/:resource/:id', async (req, res) => {
-    const id = req.params.id
-    const resource = req.params.resource
-    const result = await getOne(db, resource, id)
-    if (result) {
-        res.json(result)
-    } else {
-        res.status(404).json({ message: "errore" })
-    }
-})
 
 
 app.get('/result', async (req, res) => {
@@ -49,11 +39,7 @@ app.get('/season', async (req, res) => {
     }
 })
 
-app.get('/:resource', async (req, res) => {
-    const resource = req.params.resource
-    const result = await getAll(db, resource)
-    res.json(result)
-})
+
 
 app.listen(8080, async () => {
     try {

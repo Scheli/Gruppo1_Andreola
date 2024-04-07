@@ -1,4 +1,4 @@
-// Importare le funzioni necessarie da mongo.js (assumendo che mongo.js sia nello stesso directory o correttamente referenziato)
+
 import { connectToDB, createOne } from './db.js';
 
 
@@ -6,14 +6,14 @@ import { connectToDB, createOne } from './db.js';
 
 
 
-//<script>
+
 
 async function result() {
     
     const db = await connectToDB(); 
 
 
-    
+  /*  
   for (let i = 1979; i <= 2024; i++) {
         
         const risposta = await fetch (`https://ergast.com/api/f1/${i}.json`)
@@ -64,16 +64,21 @@ async function result() {
 
             console.log(quali.MRData.RaceTable)
 
-            // Inserire ogni risultato nel DB
+           
             await createOne(db, "Qualifying ", quali.MRData.RaceTable); 
 
 
         }
         
     }
-    // Opzionale: Stampa di verifica
+   */
+    const q= await fetch('http://ergast.com/api/f1/current/last/qualifying.json')
+    let quali = await  q.json()
+    await createOne(db,"Qualifying", quali.MRData.RaceTable)
+    const r= await fetch('http://ergast.com/api/f1/current/last/result.json')
+    let race = await r.json()
+    await createOne(db,"Race",race.MRData.RaceTable)
     console.log("Dati inseriti con successo");
 }
 
 result();
-//</script>
