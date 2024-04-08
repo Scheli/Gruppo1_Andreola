@@ -32,7 +32,7 @@
       <div class="col-md-6 offset-md-3">
         <div class="input-group mb-3">
           <label class="input-group-text" for="selectYear">Seleziona l'anno</label>
-          <select class="form-select" id="selectYear"></select>
+          <select class="form-select" id="selectYear" onchange="calendario()"></select>
         </div>
       </div>
     </div>
@@ -47,25 +47,15 @@
               <div class="row">
                 <div class="col"></div>
               </div>
-              <div id="previousRaceSection"></div>
-            </div>
-            <div class="above-border border border-warning text-warning">
-              Gare precedenti
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="container-relative">
-          <div class="container position-relative">
-            <div class="container py-4 mt-4 border border-warning">
-              <div class="row">
-                <div class="col"></div>
+              <div id="previousRaceSection">
+                <div class="above-border border border-warning text-warning mt-4 mb-4">
+              calendario
+              <table id="race">
               </div>
-              <div id="nextRaceSection"></div>
             </div>
-            <div class="above-border border border-warning text-warning">
-              Prossime gare
+            
+
+              </table>
             </div>
           </div>
         </div>
