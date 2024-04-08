@@ -69,11 +69,9 @@
 
 .slogan-container {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    text-align: center;
     transform: translate(-50%, -50%);
     width: 80%;
-    text-align: center;
 }
 
 .slogan {

@@ -22,13 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 async function fetchRaceData(selectedYear) {
-    // console.log(selectedYear)
+    console.log(selectedYear)
     const response = await fetch(`http://localhost:8080/season?resource=Race&season=${selectedYear}`);
     const raceData = await response.json();
     
     // console.log(raceData) undefined
-
-    console.log(raceData.previousYear)
 
     updateRaceSection(raceData.previousYear, 'previous');
     updateRaceSection(raceData.nextYear, 'next');
