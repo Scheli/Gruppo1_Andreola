@@ -1,5 +1,9 @@
+body{
+    min-height: 100vh;
+}
+
+
 .cerca {
-    margin-top: 250px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,7 +31,7 @@
 
 .carousel-item img {
     width: 100%;
-    height: 400px;
+    height: 410px;
     object-fit: cover;
 }
 
@@ -36,7 +40,7 @@
 }
 
 .card {
-    margin-top: 200px;
+    margin-top: 120px;
 
 }
 
@@ -72,8 +76,15 @@
     text-align: center;
     transform: translate(-50%, -50%);
     width: 80%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 64px 0;
 }
-
+.logo-bg{
+    background-color: #9bb8c287;
+   
+}
 .slogan {
     color: white;
     font-size: 1.5rem;
