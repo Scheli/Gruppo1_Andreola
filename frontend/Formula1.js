@@ -54,3 +54,4 @@ async function fetchRaceData(selectedYear) {
     });
 }
 
+}
