@@ -86,9 +86,13 @@ async function update(){
 } 
 //f1result();
 
+
+//ufcdati
 async function ufcdati(){
     
+
     let rankings={}
+
     const r = await fetch("https://api.octagon-api.com/rankings",{
         headers: {
             'Accept': 'application/json'
@@ -96,6 +100,7 @@ async function ufcdati(){
     });
 
     rankings = await r.json() 
+
     createMany(db,"UFC_Ranking",rankings)
     console.log(rankings)
     
@@ -107,8 +112,13 @@ async function ufcdati(){
     });
 
     fighters = await f.json() 
-    createMany(db,"UFC_Fighters",fighters)
-    console.log(fighters)
+
+    var myData = Object.keys(fighters).map(key => {
+        return fighters[key];
+    })
+
+    createMany(db,"UFC_Fighters",myData)
+    // console.log(myData)
 
 }
 
