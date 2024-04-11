@@ -1,7 +1,7 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     var selectYear = document.getElementById('selectYear');
 
-    for (var year = 1979; year < 2024; year++) {
+    for (var year = 1980; year <= 2024; year++) {
         var option = document.createElement('option');
         option.textContent = year;
         option.value = year;
@@ -14,21 +14,12 @@ document.addEventListener('DOMContentLoaded', function () {
     option2024.selected = true;
     selectYear.appendChild(option2024);
 
-    selectYear.addEventListener('change', function () {
+    selectYear.addEventListener('change', function() {
         var selectedYear = this.value;
         fetchRaceData(selectedYear);
     });
 });
 
-async function calendario() {
-    const s = document.getElementById("selectYear").value;
-    const g = await fetch(`http://localhost:8080/f1?resource=Calendar&season=${s}`,{
-        headers: {
-            'Accept': 'application/json'
-        }
-    });
-    const gare = await g.json();
-    console.log(JSON.stringify(gare));
 
 async function fetchRaceData(selectedYear) {
     console.log(selectedYear)
@@ -39,19 +30,29 @@ async function fetchRaceData(selectedYear) {
 
     updateRaceSection(raceData.previousYear, 'previous');
     updateRaceSection(raceData.nextYear, 'next');
-    const table = document.getElementById('race');
-
-    table.innerHTML = '';
-
-    gare[0].Races.forEach(race => {
-        const row = table.insertRow();
-        const cellRaceName = row.insertCell();
-        cellRaceName.textContent = race.raceName; 
-        const cellDate = row.insertCell();
-        cellDate.textContent = race.date;
-        const cellLocation = row.insertCell();
-        cellLocation.textContent = `${race.Circuit.Location.locality}, ${race.Circuit.Location.country}`;
-    });
 }
 
+function updateRaceSection(data, section) {
+    var raceSection = document.getElementById(`${section}RaceSection`);
+    raceSection.innerHTML = '';
+    // console.log(data) undefined
+    if (data) {
+        data.forEach(function(race) {
+            var raceElement = document.createElement('div');
+            raceElement.classList.add('card');
+            raceElement.innerHTML = `
+                <img src="${race.image}" class="card-img-top" alt="${race.title}">
+                <div class="card-body">
+                    <h2 class="card-title">${race.title}</h2>
+                    <p class="card-text">${race.description}</p>
+                    <div class="text-center">
+                        <a href="${race.videoUrl}" class="btn-garda-video">GUARDA IL VIDEO</a>
+                    </div>
+                </div>
+            `;
+            raceSection.appendChild(raceElement);
+        });
+    } else {
+        raceSection.innerHTML = '<p>Nessun dato disponibile per questo anno.</p>';
+    }
 }
