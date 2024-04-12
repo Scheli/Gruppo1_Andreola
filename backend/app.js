@@ -1,55 +1,69 @@
-import express from 'express'
-import cors from 'cors'
-import { getAll, getOne, connectToDB, getOnerace, getSeason } from './db.js'
+import express from "express";
+import cors from "cors";
+import {
+  getAll,
+  getOne,
+  connectToDB,
+  getOnerace,
+  getSeason,
+  getFighter,
+  getAllFighter,
+} from "./db.js";
 
-const app = express()
+const app = express();
 let db; //db connection
 
+app.use(express.json());
+app.use(cors());
 
-app.use(express.json())
-app.use(cors())
+app.get("/f1", async (req, res) => {
+  const resource = req.query.resource;
+  const season = req.query.season;
+  const round = req.query.round;
 
-
-
-
-
-
-app.get('/f1', async (req,res) =>{
-    const resource = req.query.resource;
-    const season = req.query.season;
-    const round = req.query.round
-
-    if (season && round) {
-        const result = await getOnerace(db, resource, season, round);
-        if (result) {
-            res.json(result);
-        } else {
-            res.status(404).json({ message: "errore" });
-        }
-        
-    } else if (season) {
-        const result = await getSeason(db, resource, season);
-
-        if (result) {
-            res.json(result);
-        } else {
-            res.status(404).json({ message: "errore" });
-        }
+  if (season && round) {
+    const result = await getOnerace(db, resource, season, round);
+    if (result) {
+      res.json(result);
+    } else {
+      res.status(404).json({ message: "errore" });
     }
+  } else if (season) {
+    const result = await getSeason(db, resource, season);
 
-})
+    if (result) {
+      res.json(result);
+    } else {
+      res.status(404).json({ message: "errore" });
+    }
+  }
+});
+app.get("/ufc", async (req, res) => {
+  try {
+    const fighterId = req.query.fighter;
+    console.log(fighterId);
+    const result = await getFighter(db, "UFC_Fighters", fighterId);
+    console.log(result);
 
+    if (result) {
+      res.json(result);
+    } else {
+      res.status(404).json({ error: "Fighter not found" }); 
+    }
+  } catch (error) {
+    console.error("Error while fetching fighter:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 app.listen(8080, async () => {
-    try {
-        db = await connectToDB()
-        console.log("Server in esecuzione su porta 8080 e DB connesso")
-    } catch (e) {
-        console.error(e)
-    }
-
-})
-
+  try {
+    db = await connectToDB();
+    console.log("Server in esecuzione su porta 8080 e DB connesso");
+  } catch (e) {
+    console.error(e);
+  }
+});
 
 // import express from 'express';
 // import cors from 'cors';

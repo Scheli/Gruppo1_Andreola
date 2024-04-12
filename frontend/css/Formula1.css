@@ -11,21 +11,13 @@ body {
   margin: 0;
   padding: 0;
 }
-.swiper-container {
+swiper-container {
+  margin-top: 5%;
+  margin-bottom: 5%;
   width: 100%;
-  height: 100%;
-}
-.navbar{
-  background: #000000;
+  height: 30%;
 }
 
-.swiper-slide img {
-  width: 100px !important;
-  position: center; 
-  height: auto !important; 
-  object-fit: contain; 
-  border: 2px solid #fff; 
-}
 swiper-slide {
   text-align: center;
   font-size: 18px;
@@ -34,6 +26,13 @@ swiper-slide {
   align-items: center;
 }
 
+swiper-slide img {
+  display: block;
+  position: center;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .navbar-brand img {
   width: 400px;
   height: auto;
@@ -47,7 +46,9 @@ swiper-slide {
   width: 400px;
   height: auto;
 }
-
+.navbar{
+  background: #000000;
+}
 
 .above-border {
   width: auto;
@@ -71,7 +72,19 @@ swiper-slide {
 .carousel-inner .carousel-item {
   transition: transform 5s ease;
 }
+
+
+.con{
+  margin-top: 150px;
+}
+
+.img-f1 {
+  width: 100%;
+  height: auto;
+}
 .btn-garda-video {
+  margin-top: 30px;
+  margin-bottom: 50px;
   position: relative;
   display: inline-block;
   color: white;
@@ -109,3 +122,35 @@ swiper-slide {
 .card,p,h2{
   color: white;
 }
+/* 
+@media (min-width: 768px) {
+  swiper-container {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 100%;
+    height: 30%;
+  }
+  
+  swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  swiper-slide img {
+    display: block;
+    position: center;
+    width: 500px;
+    height: 170px;
+    object-fit: cover;
+  }
+  .col-md-4 {
+    width: 50%;
+    padding-top: 4px; 
+    padding: 1; 
+    }
+} */
+
+
