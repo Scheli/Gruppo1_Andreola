@@ -56,6 +56,18 @@ app.get("/ufc", async (req, res) => {
   }
 });
 
+app.get('/ufc/fighters', async (req, res) => {
+
+  const result = await getAllFighter(db, "UFC_Fighters");
+
+  if (result) {
+      res.json(result);
+  } else {
+      res.status(404).json({ error: "Fighter not found" });
+  }
+});
+
+
 app.listen(8080, async () => {
   try {
     db = await connectToDB();
