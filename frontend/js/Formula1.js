@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     var selectYear = document.getElementById('selectYear');
 
     for (var year = 1979; year <= 2024; year++) {
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     selectYear.value = 2024;
 
-    selectYear.addEventListener('change', function () {
+    selectYear.addEventListener('change', function() {
         var selectedYear = this.value;
         calendario(selectedYear);
     });
