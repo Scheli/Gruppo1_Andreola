@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -12,38 +12,38 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg  navbar-custom border-bottom border-body" data-bs-theme="dark">
-    <div class="container">
-      <a class="navbar-brand fs-4" href="index.html">
-        <img src="immagini/logo-removebg-preview.png" alt="Bootstrap" />
-      </a>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link fs-3" href="index.html">Home</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+    <nav class="navbar navbar-expand-lg  navbar-custom border-bottom border-body" data-bs-theme="dark">
+        <div class="container">
+            <a class="navbar-brand fs-4" href="index.html">
+                <img src="immagini/logo-removebg-preview.png" alt="Bootstrap" />
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link fs-3" href="index.html">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div>
         <div>
             <h2 style="padding-left: 43%;">Cerca Fighter</h2>
         </div>
         <div class="cerca">
-          <div class="input-group news-input" style="max-width: 600px">
-            <input type="text" class="form-control" placeholder="Cerca il tuo Fighter preferito" />
-          </div>
+            <div class="input-group news-input" style="max-width: 600px">
+                <input type="text" class="form-control" id="searchInput" placeholder="Cerca il tuo Fighter preferito" />
+            </div>
         </div>
 
-        <div class="container" >
-          <h2 id="fighter-names"></h2>
-      </div>
+        <div class="container">
+            <ul id="fighter-names" class="list-group"></ul>
+        </div>
 
-    <script src="js/Fighter.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        <script src="js/Fighters.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>

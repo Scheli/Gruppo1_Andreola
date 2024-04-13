@@ -67,11 +67,18 @@ export async function updateOne(db, resource, id, newValues) {
 
 export async function getAllFighter(db, UFC_Fighters) {
   const data = await db.collection(UFC_Fighters).find().toArray();
-  return data
+  return data;
 }
 
 export async function getFighter(db, UFC_Fighters, id) {
-    const data = await db.collection(UFC_Fighters).findOne({ _id: new ObjectId(id) });
-    return data;
-  }
-  
+  const data = await db
+    .collection(UFC_Fighters)
+    .findOne({ _id: new ObjectId(id) });
+  return data;
+}
+
+export async function getNameFighter(db, UFC_Fighters, name) {
+  const cursor = await db.collection(UFC_Fighters).find({ name: name });
+  const fighters = await cursor.toArray();
+  return fighters;
+}

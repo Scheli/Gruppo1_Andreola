@@ -8,6 +8,7 @@ import {
   getSeason,
   getFighter,
   getAllFighter,
+  getNameFighter
 } from "./db.js";
 
 const app = express();
@@ -67,6 +68,22 @@ app.get('/ufc/fighters', async (req, res) => {
   }
 });
 
+app.get('/ufc/fighters/:name', async (req, res) => {
+  try {
+      const fighterName = req.params.name;
+      // console.log(fighterName);
+      
+      const fighterDetails = await getNameFighter(db, "UFC_Fighters", fighterName);
+      
+      if (!fighterDetails) {
+          return res.status(404).json({ error: 'Fighter not found' });
+      }
+      res.json(fighterDetails);
+  } catch (error) {
+      console.error('Error retrieving fighter details:', error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 app.listen(8080, async () => {
   try {

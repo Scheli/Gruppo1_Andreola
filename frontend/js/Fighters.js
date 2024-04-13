@@ -21,7 +21,7 @@ async function listaFighters() {
 
             const aElement = document.createElement('a');
             aElement.textContent = fighter.name;
-            aElement.href = '#'; // Replace '#' with the appropriate link
+            aElement.href = 'fighter-details.html'; // Replace '#' with the appropriate link
             liElement.appendChild(aElement);
 
             ulElement.appendChild(liElement);

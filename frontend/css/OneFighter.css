@@ -1,0 +1,65 @@
+html,
+body {
+  position: relative;
+  height: 100%;
+}
+
+body {
+  background: #333;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+p,h2{
+  color: white;
+}
+.navbar{
+  background: #000000;
+}
+
+.navbar-brand img {
+  width: 400px;
+  height: auto;
+}
+.cerca {
+  margin-top: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn {
+  background-color: #6c757d;
+}
+
+.btn:hover {
+  background-color: #000000;
+}
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#fighter-names {
+  margin-top: 5%;
+  color: white;
+  font-size: 40px;
+
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+li{
+  list-style-type: none;
+}
+
+a:hover{
+  color: #93A3BC;
+}
