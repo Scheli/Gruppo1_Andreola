@@ -15,6 +15,26 @@ export async function connectToDB() {
   }
 }
 
+export async function aggiungiUtente(utente) {
+  try {
+    const db = await connectToDB();
+    const existingUser = await db.collection('utenti').findOne({ email: utente.email });
+
+    if (existingUser) {
+      return null; 
+    }
+
+    const result = await db.collection('utenti').insertOne(utente);
+    return result.insertedId;
+  } catch (err) {
+    console.error("Qualcosa è andato storto nell'inserimento:", err);
+  }
+}
+export async function getAllUsers(db) {
+  const utenti = await db.collection("utenti").find().toArray();
+  return utenti;
+}
+
 export async function getAll(db, resource) {
   const data = await db.collection(resource).find().toArray();
   return data;

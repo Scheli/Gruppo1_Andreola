@@ -4,6 +4,8 @@ import {
   getAll,
   getOne,
   connectToDB,
+  aggiungiUtente,
+  getAllUsers,
   getOnerace,
   getSeason,
   getFighter,
@@ -84,6 +86,50 @@ app.get('/ufc/fighters/:name', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+app.post("/utenti", async (req, res) => {
+  try {
+    const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
+
+    const utente = {
+      username,
+      email,
+      password
+    };
+
+    const existingUser = await db.collection('utenti').findOne({ email: email });
+    if (existingUser) {
+      res.status(400).json({ error: "L'email è già stata utilizzata" });
+      return;
+    }
+
+    const utenti = await aggiungiUtente(utente);
+    if (utenti) {
+      res.status(200).json(utente);
+    } else {
+      res.status(500).json({ error: "Errore durante l'aggiunta dell'utente" });
+    }
+  } catch (error) {
+    console.error("Errore durante la gestione della richiesta POST '/utenti':", error);
+    res.status(500).json({ error: "Errore interno del server" });
+  }
+});
+
+app.get("/utenti", async (req, res) => {
+  const { email } = req.query;
+
+  try {
+    const utente = await db.collection("utenti").findOne({ email: email });
+    res.json(utente ? [utente] : null); 
+  } catch (error) {
+    console.error("Errore durante il recupero dell'utente:", error);
+    res.status(500).json({ error: "Errore interno del server" });
+  }
+});
+
+
 
 app.listen(8080, async () => {
   try {
