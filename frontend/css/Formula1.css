@@ -153,4 +153,9 @@ swiper-slide img {
     }
 } */
 
+.bottone{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
