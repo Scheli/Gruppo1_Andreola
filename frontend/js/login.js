@@ -8,6 +8,11 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     const data = await response.json();
 
     if (response.ok && data.length > 0 && data[0].password === password) {
+      localStorage.setItem('userEmail', email);
+      
+      const username = data[0].username;
+      localStorage.setItem('username', username);
+
       window.location.replace("/frontend/index.html");
     } else {
       showError("La password inserita non è corretta. Riprova.");
@@ -16,6 +21,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     console.error("Errore durante il login:", error);
   }
 });
+
 
 function showError(message) {
   const errorMessageElement = document.getElementById('errorMessage');

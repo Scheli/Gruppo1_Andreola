@@ -39,3 +39,8 @@ async function calendario(selectedYear) {
         cellLocation.textContent = `${race.Circuit.Location.locality}, ${race.Circuit.Location.country}`;
     });
 }
+const username = localStorage.getItem('username');
+
+if (!username) {
+    window.location.replace("/frontend/login.html");
+}

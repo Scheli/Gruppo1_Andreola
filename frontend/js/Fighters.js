@@ -21,7 +21,7 @@ async function listaFighters() {
 
             const aElement = document.createElement('a');
             aElement.textContent = fighter.name;
-            aElement.href = 'fighter-details.html'; // Replace '#' with the appropriate link
+            aElement.href = 'fighter-details.html';
             liElement.appendChild(aElement);
 
             ulElement.appendChild(liElement);
@@ -37,3 +37,8 @@ async function listaFighters() {
 window.onload = function () {
     listaFighters();
 };
+const username = localStorage.getItem('username');
+
+if (!username) {
+    window.location.replace("/frontend/login.html");
+}

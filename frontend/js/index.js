@@ -135,5 +135,18 @@ function scrollChatToBottom() {
      }
  }
  window.onload = function() {
-     toggleDarkMode();
- };
+    const username = localStorage.getItem('username');
+    const loginButton = document.getElementById('loginButton');
+
+    if (username) {
+        document.getElementById('username').innerText = username;
+    } else {
+        loginButton.innerText = 'Accedi';
+        loginButton.href = '/frontend/login.html';
+    }
+
+    toggleDarkMode();
+};
+
+
+ 

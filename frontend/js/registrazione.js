@@ -13,7 +13,7 @@ function hideErrorMessages() {
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
   
-    document.getElementById('password').classList.remove('is-invalid');
+    document.getElementById('password').classList.remove('is-invalid');   
     document.getElementById('confirmPassword').classList.remove('is-invalid');
   
     if (password.length < 8) {
@@ -34,6 +34,7 @@ function hideErrorMessages() {
       document.getElementById('confirmPassword').classList.add('is-invalid');
       document.getElementById('confirmPasswordFeedback').classList.remove('d-none');
       hideErrorMessages();
+      
       return;
     }
   
@@ -49,6 +50,7 @@ function hideErrorMessages() {
           'Content-type': 'application/json; charset=UTF-8',
         }
       });
+    
       if (response.status === 400) {
         const data = await response.json();
         document.getElementById('email').classList.add('is-invalid');
@@ -58,6 +60,12 @@ function hideErrorMessages() {
         hideErrorMessages();
         return;
       }
+    
+      if (response.ok) {
+        window.location.href = 'login.html'; 
+        return;
+      }
+    
       const ris = await response.json();
       console.log(ris);
     } catch (error) {

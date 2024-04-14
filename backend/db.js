@@ -15,6 +15,21 @@ export async function connectToDB() {
   }
 }
 
+export async function deleteUtente(email) {
+  try {
+    const db = await connectToDB();
+    const result = await db.collection('utenti').deleteOne({ email: email });
+    if (result.deletedCount === 1) {
+      return { message: "Utente eliminato con successo" };
+    } else {
+      return { error: "L'utente non è stato trovato" };
+    }
+  } catch (err) {
+    console.error("Si è verificato un errore durante l'eliminazione dell'utente:", err);
+    return { error: "Errore durante l'eliminazione dell'utente" };
+  }
+}
+
 export async function aggiungiUtente(utente) {
   try {
     const db = await connectToDB();
@@ -39,6 +54,7 @@ export async function getAll(db, resource) {
   const data = await db.collection(resource).find().toArray();
   return data;
 }
+
 
 export async function getOne(db, resource, id) {
   const data = await db.collection(resource).findOne({ _id: new ObjectId(id) });

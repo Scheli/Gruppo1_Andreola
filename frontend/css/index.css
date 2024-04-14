@@ -217,3 +217,10 @@ body.dark-mode p {
 body:not(.dark-mode) p {
   color: #000000;
 }
+.utente{
+  margin-left: 100vh;
+}
+p.utente a {
+  color: rgb(255, 255, 255); 
+  text-decoration: none; 
+}

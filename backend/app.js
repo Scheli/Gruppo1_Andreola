@@ -10,6 +10,7 @@ import {
   getSeason,
   getFighter,
   getAllFighter,
+  deleteUtente,
   getNameFighter
 } from "./db.js";
 
@@ -125,6 +126,21 @@ app.get("/utenti", async (req, res) => {
     res.json(utente ? [utente] : null); 
   } catch (error) {
     console.error("Errore durante il recupero dell'utente:", error);
+    res.status(500).json({ error: "Errore interno del server" });
+  }
+});
+app.delete("/utenti/:email", async (req, res) => {
+  const email = req.params.email;
+
+  try {
+    const result = await deleteUtente(email);
+    if (result.message) {
+      res.json(result);
+    } else {
+      res.status(404).json(result);
+    }
+  } catch (error) {
+    console.error("Errore durante l'eliminazione dell'utente:", error);
     res.status(500).json({ error: "Errore interno del server" });
   }
 });
