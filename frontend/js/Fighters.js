@@ -10,35 +10,58 @@ async function listaFighters() {
 
         fighters.sort((a, b) => a.name.localeCompare(b.name));
 
-        const container = document.getElementById('fighter-names');
+        const container = document.getElementById('fighter-list');
 
         container.innerHTML = '';
 
-        const ulElement = document.createElement('ul');
-
         fighters.forEach(fighter => {
-            const liElement = document.createElement('li');
+            const divElement = document.createElement('div');
+            divElement.classList.add('fighter');
 
-            const aElement = document.createElement('a');
-            aElement.textContent = fighter.name;
-            aElement.href = 'fighter-details.html';
-            liElement.appendChild(aElement);
+            const nameElement = document.createElement('h2');
+            nameElement.textContent = fighter.name;
 
-            ulElement.appendChild(liElement);
+            // Aggiungi qui il gestore degli eventi click
+            nameElement.addEventListener('click', () => {
+                window.location.href = `fighter-details.html?name=${encodeURIComponent(fighter.name)}`;
+            });
+
+            divElement.appendChild(nameElement);
+            container.appendChild(divElement);
         });
 
-        container.appendChild(ulElement);
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', () => {
+            const searchValue = searchInput.value.trim().toLowerCase();
+            const filteredFighters = fighters.filter(fighter => fighter.name.toLowerCase().includes(searchValue));
+            renderFighters(filteredFighters, container);
+        });
 
     } catch (error) {
         console.error('Error fetching or parsing data:', error);
     }
 }
 
+function renderFighters(fighters, container) {
+    container.innerHTML = '';
+
+    fighters.forEach(fighter => {
+        const divElement = document.createElement('div');
+        divElement.classList.add('fighter');
+
+        const nameElement = document.createElement('h2');
+        nameElement.textContent = fighter.name;
+
+        // Aggiungi qui il gestore degli eventi click
+        nameElement.addEventListener('click', () => {
+            window.location.href = `fighter-details.html?name=${encodeURIComponent(fighter.name)}`;
+        });
+
+        divElement.appendChild(nameElement);
+        container.appendChild(divElement);
+    });
+}
+
 window.onload = function () {
     listaFighters();
 };
-const username = localStorage.getItem('username');
-
-if (!username) {
-    window.location.replace("/frontend/login.html");
-}

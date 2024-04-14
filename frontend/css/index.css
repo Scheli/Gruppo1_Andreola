@@ -220,7 +220,7 @@ body:not(.dark-mode) p {
 .utente{
   margin-left: 100vh;
 }
-p.utente a {
-  color: rgb(255, 255, 255); 
-  text-decoration: none; 
-}
+  p.utente a {
+    color: rgb(255, 255, 255); 
+    text-decoration: none; 
+  }
