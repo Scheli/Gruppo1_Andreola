@@ -1,32 +1,39 @@
 async function Division(){
-    const cont = document.getElementById('division');
-
-    const response = await fetch(
-        `http://localhost:8080/ufc/${id}`, {
+  const cont = document.getElementById('division');
+  
+  
+  try {
+      const response = await fetch(`http://localhost:8080/ufc/${_id}`, {
           headers: {
-            Accept: "application/json",
+              Accept: "application/json",
           },
-        }
-    );
+      });
 
-    const fightersData = await response.json();
-    console.log(fightersData);
+      if (!response.ok) {
+          throw new Error('Failed to fetch UFC fighter data');
+      }
 
-    cont.innerHTML = '';
+      const fightersData = await response.json();
+      console.log(fightersData);
 
-    fightersData.fighters.forEach(fighter => {
-        const fighterDiv = document.createElement('div');
-        fighterDiv.classList.add('fighter');
+      cont.innerHTML = '';
 
-        const fighterName = document.createElement('h3');
-        fighterName.textContent = fighter.name;
+      fightersData.fighters.forEach(fighter => {
+          const fighterDiv = document.createElement('div');
+          fighterDiv.classList.add('fighter');
 
-        const fighterId = document.createElement('p');
-        fighterId.textContent = `ID: ${fighter.id}`;
+          const fighterName = document.createElement('h3');
+          fighterName.textContent = fighter.name;
 
-        fighterDiv.appendChild(fighterName);
-        fighterDiv.appendChild(fighterId);
+          const fighterId = document.createElement('p');
+          fighterId.textContent = `ID: ${fighter.id}`;
 
-        cont.appendChild(fighterDiv);
-    });
+          fighterDiv.appendChild(fighterName);
+          fighterDiv.appendChild(fighterId);
+
+          cont.appendChild(fighterDiv);
+      });
+  } catch (error) {
+      console.error('Error:', error);
+  }
 }
