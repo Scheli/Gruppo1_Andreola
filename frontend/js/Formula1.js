@@ -32,12 +32,19 @@ async function calendario(selectedYear) {
     gare[0].Races.forEach(race => {
         const row = table.insertRow();
         const cellRaceName = row.insertCell();
-        cellRaceName.textContent = race.raceName;
+        const raceLink = document.createElement('a');
+        raceLink.href = "round.html";
+        raceLink.textContent = race.raceName;
+        raceLink.style.textDecoration = "none"; 
+        raceLink.style.color = "#f1b811"; 
+        cellRaceName.appendChild(raceLink);
         const cellDate = row.insertCell();
         cellDate.textContent = race.date;
         const cellLocation = row.insertCell();
         cellLocation.textContent = `${race.Circuit.Location.locality}, ${race.Circuit.Location.country}`;
     });
+    
+    
 }
 const username = localStorage.getItem('username');
 
