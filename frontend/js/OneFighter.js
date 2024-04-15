@@ -27,34 +27,38 @@ async function getFighterDetails() {
   }
   
   function createFighterDetailsDiv(fighterData) {
-    // Create a div element to hold fighter details
     const fighterDetailsDiv = document.createElement("div");
-  
-    // Set the class of the fighter details div
     fighterDetailsDiv.classList.add("fighter-details");
-  
-    // Set the inner HTML of the fighter details div
-    fighterDetailsDiv.innerHTML = `
-      <div><h2>${fighterData.name}</h2></div>
-      <div><h3>"${fighterData.nickname}"</h3></div>
-      <div><img src="${fighterData.imgUrl}" alt="${fighterData.name}"></div>
-      <div class="category"><p>Category: ${fighterData.category}</p></div>
-      <div class="age"><p>Age: ${fighterData.age}</p></div>
-      <div class="height"><p>Height: ${fighterData.height} inches</p></div>
-      <div class="weight"><p>Weight: ${fighterData.weight} lbs</p></div>
-      <div class="reach"><p>Reach: ${fighterData.reach} inches</p></div>
-      <div class="legReach"><p>Leg Reach: ${fighterData.legReach} inches</p></div>
-      <div class="style"><p>Fighting Style: ${fighterData.fightingStyle}</p></div>
-      <div class="wins"><p>Wins: ${fighterData.wins}</p></div>
-      <div class="losses"><p>Losses: ${fighterData.losses}</p></div>
-      <div class="draws"><p>Draws: ${fighterData.draws}</p></div>
-      <div class="debut"><p>Octagon Debut: ${fighterData.octagonDebut}</p></div>
-      <div class="birth"><p>Place of Birth: ${fighterData.placeOfBirth}</p></div>
-      <div class="trains"><p>Trains At: ${fighterData.trainsAt}</p></div>
+
+    const statsContainer = document.createElement("div");
+    statsContainer.classList.add("fighter-stats");
+
+    statsContainer.innerHTML = `
+        <div class="stat-tag"><p>Category: ${fighterData.category}</p></div>
+        <div class="stat-tag"><p>Age: ${fighterData.age}</p></div>
+        <div class="stat-tag"><p>Height: ${fighterData.height} inches</p></div>
+        <div class="stat-tag"><p>Weight: ${fighterData.weight} lbs</p></div>
+        <div class="stat-tag"><p>Reach: ${fighterData.reach} inches</p></div>
+        <div class="stat-tag"><p>Leg Reach: ${fighterData.legReach} inches</p></div>
+        <div class="stat-tag"><p>Fighting Style: ${fighterData.fightingStyle}</p></div>
+        <div class="stat-tag"><p>Wins: ${fighterData.wins}</p></div>
+        <div class="stat-tag"><p>Losses: ${fighterData.losses}</p></div>
+        <div class="stat-tag"><p>Draws: ${fighterData.draws}</p></div>
+        <div class="stat-tag"><p>Octagon Debut: ${fighterData.octagonDebut}</p></div>
+        <div class="stat-tag"><p>Place of Birth: ${fighterData.placeOfBirth}</p></div>
+        <div class="stat-tag"><p>Trains At: ${fighterData.trainsAt}</p></div>
     `;
-  
+
+    fighterDetailsDiv.innerHTML = `
+        <div><h2>${fighterData.name}</h2></div>
+        <div><h3>"${fighterData.nickname}"</h3></div>
+        <div><img src="${fighterData.imgUrl}" alt="${fighterData.name}"></div>
+    `;
+    fighterDetailsDiv.appendChild(statsContainer);
+
     return fighterDetailsDiv;
-  }
+}
+
   
   window.onload = function() {
     getFighterDetails();
