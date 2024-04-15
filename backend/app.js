@@ -42,6 +42,49 @@ app.get("/f1", async (req, res) => {
     }
   }
 });
+
+app.get("/f1winrate", async (req, res) => {
+  try {
+    const season = req.query.season;
+    const pilot = req.query.pilot;
+    const driverStandings = await getSeason(db, "Driver_Standings", season);
+
+    if (!driverStandings || driverStandings.length === 0) {
+      throw new Error("Dati delle classifiche non trovati per la stagione specificata");
+    }
+
+    let wins = 0;
+    let totalRaces = driverStandings[0].StandingsLists[0].round;
+    let pilotFound = false;
+    let point =0
+    driverStandings.forEach(standing => {
+      standing.StandingsLists.forEach(standingsList => {
+        standingsList.DriverStandings.forEach(driverStanding => {
+          if (driverStanding.Driver.familyName === pilot) {
+            pilotFound = true;
+            wins = parseInt(driverStanding.wins);
+            point= parseInt(driverStanding.points)
+          }
+        });
+      });
+    });
+
+    if (!pilotFound) {
+      throw new Error("Pilota non trovato");
+    }
+
+    const winPercentage = (wins === 0 ? 0 : (wins / totalRaces) * 100).toFixed(2);
+    const pointPerrace = (point/totalRaces).toFixed(2);
+    res.json({wins,point, winPercentage, pointPerrace });
+  } catch (error) {
+    console.error("Si è verificato un errore:", error.message);
+    res.status(500).send(error.message);
+  }
+});
+
+
+
+
 app.get("/ufc", async (req, res) => {
   try {
     const fighterId = req.query.fighter;
