@@ -56,13 +56,14 @@ app.get("/f1winrate", async (req, res) => {
     let wins = 0;
     let totalRaces = driverStandings[0].StandingsLists[0].round;
     let pilotFound = false;
-
+    let point =0
     driverStandings.forEach(standing => {
       standing.StandingsLists.forEach(standingsList => {
         standingsList.DriverStandings.forEach(driverStanding => {
           if (driverStanding.Driver.familyName === pilot) {
             pilotFound = true;
             wins = parseInt(driverStanding.wins);
+            point= parseInt(driverStanding.points)
           }
         });
       });
@@ -73,8 +74,8 @@ app.get("/f1winrate", async (req, res) => {
     }
 
     const winPercentage = (wins === 0 ? 0 : (wins / totalRaces) * 100).toFixed(2);
-
-    res.json({ winPercentage });
+    const pointPerrace = (point/totalRaces).toFixed(2);
+    res.json({wins,point, winPercentage, pointPerrace });
   } catch (error) {
     console.error("Si è verificato un errore:", error.message);
     res.status(500).send(error.message);
