@@ -11,7 +11,8 @@ import {
   getFighter,
   getAllFighter,
   deleteUtente,
-  getNameFighter
+  getNameFighter,
+  getDivisionFighter
 } from "./db.js";
 
 const app = express();
@@ -130,6 +131,19 @@ app.get('/ufc/fighters/:name', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+app.get('/ufc/:division', async (req, res) => {
+  const id = req.params.division;
+  console.log(id);
+  try {
+    const fighterDetails = await getDivisionFighter(db, "UFC_Ranking", id);
+    res.json(fighterDetails); 
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error", message: error.message });
+  }
+});
+
 
 app.post("/utenti", async (req, res) => {
   try {

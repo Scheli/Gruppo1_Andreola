@@ -115,6 +115,11 @@ export async function getFighter(db, UFC_Fighters, id) {
 
 export async function getNameFighter(db, UFC_Fighters, name) {
   const cursor = await db.collection(UFC_Fighters).find({ name: name });
-  const fighters = await cursor.toArray();
+  const fighters = await cursor.toArray(); 
   return fighters;
+}
+
+export async function getDivisionFighter(db, UFC_Ranking, id) {
+  const data = await db.collection(UFC_Ranking).findOne({ _id: new ObjectId(id) });
+  return data;
 }
