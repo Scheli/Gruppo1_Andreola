@@ -12,10 +12,11 @@ body {
   padding: 0;
 }
 
-p,h2{
+p,
+h2 {
   color: white;
 }
-.navbar{
+.navbar {
   background: #000000;
 }
 
@@ -37,7 +38,6 @@ p,h2{
   background-color: #000000;
 }
 
-
 .container {
   display: flex;
   justify-content: center;
@@ -48,7 +48,6 @@ p,h2{
   margin-top: 5%;
   color: white;
   font-size: 40px;
-
 }
 
 a {
@@ -56,10 +55,58 @@ a {
   color: white;
 }
 
-li{
+li {
   list-style-type: none;
 }
 
-a:hover{
-  color: #93A3BC;
+a:hover {
+  color: #93a3bc;
+}
+#fighter-details {
+  padding: 20px; /* Spaziatura interna */
+  border-radius: 10px; /* Bordi arrotondati */
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 2); Ombra */
+  max-width: 800px; /* Larghezza massima */
+  margin: 0 auto; /* Centrato orizzontalmente */
+}
+
+#fighter-details img {
+  display: block;
+  margin: 0 auto;
+  width: 50%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  
+}
+
+#fighter-details h2 {
+  text-align: center;
+  justify-content: center;
+  font-size: 36px;
+}
+
+#fighter-details h3 {
+  text-align: center;
+  justify-content: center;
+  font-size: 28px;
+  color: brown;
+}
+
+.category,
+.age,
+.height,
+.weight,
+.reach,
+.legReach,
+.style,
+.wins,
+.losses,
+.draws,
+.debut,
+.birth,
+.trains {
+  flex: 1 1 calc(20% - 20px); 
+  max-width: calc(20% - 20px); 
+  margin: 10px; 
 }

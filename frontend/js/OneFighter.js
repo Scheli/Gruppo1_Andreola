@@ -5,60 +5,58 @@ async function getFighterDetails() {
       const urlParams = new URLSearchParams(window.location.search);
       const fighterName = urlParams.get("name");
   
-    //   if (!fighterName) {
-    //     console.error("Nome del combattente non trovato nella query string dell'URL.");
-    //     container.innerHTML = `<p>Nome del combattente non specificato nell'URL.</p>`;
-    //     return;
-    //   }
-  
-      console.log("Nome del combattente dalla query string:", fighterName);
-  
       const response = await fetch(
-        `http://localhost:8080/ufc/fighters/${encodeURIComponent(fighterName)}`,
-        {
+        `http://localhost:8080/ufc/fighters/${encodeURIComponent(fighterName)}`, {
           headers: {
             Accept: "application/json",
           },
         }
       );
   
-      if (!response.ok) {
-        console.error(`Errore HTTP! status: ${response.status}`);
-        container.innerHTML = `<p>Dettagli del combattente non trovati. Verifica il nome o riprova più tardi.</p>`;
-        return;
-      }
-  
       const fighters = await response.json();
-    //   console.log("Response status:", response.status);
-    //   console.log("Fighters data:", fighters);
-  
-      // Accedi al primo combattente nell'array
       const fighterData = fighters[0];
   
-      container.innerHTML = `
-        <h2>${fighterData.name}</h2>
-        <h3>${fighterData.nickname}</h3>
-        <img src="${fighterData.imgUrl}" alt="${fighterData.name}">
-        <p>Category: ${fighterData.category}</p>
-        <p>Age: ${fighterData.age}</p>
-        <p>Height: ${fighterData.height} inches</p>
-        <p>Weight: ${fighterData.weight} lbs</p>
-        <p>Reach: ${fighterData.reach} inches</p>
-        <p>Leg Reach: ${fighterData.legReach} inches</p>
-        <p>Fighting Style: ${fighterData.fightingStyle}</p>
-        <p>Wins: ${fighterData.wins}</p>
-        <p>Losses: ${fighterData.losses}</p>
-        <p>Draws: ${fighterData.draws}</p>
-        <p>Octagon Debut: ${fighterData.octagonDebut}</p>
-        <p>Place of Birth: ${fighterData.placeOfBirth}</p>
-        <p>Trains At: ${fighterData.trainsAt}</p>
-        <!-- Aggiungere altre caratteristiche del combattente qui -->
-      `;
+      // Generate the fighter details div dynamically
+      const fighterDetailsDiv = createFighterDetailsDiv(fighterData);
+  
+      // Append the fighter details div to the container
+      container.appendChild(fighterDetailsDiv);
     } catch (error) {
-      console.error("Errore nel recupero dei dettagli del combattente:", error);
+      console.error("Error fetching fighter details:", error);
     }
   }
   
-  window.onload = function () {
+  function createFighterDetailsDiv(fighterData) {
+    // Create a div element to hold fighter details
+    const fighterDetailsDiv = document.createElement("div");
+  
+    // Set the class of the fighter details div
+    fighterDetailsDiv.classList.add("fighter-details");
+  
+    // Set the inner HTML of the fighter details div
+    fighterDetailsDiv.innerHTML = `
+      <div><h2>${fighterData.name}</h2></div>
+      <div><h3>"${fighterData.nickname}"</h3></div>
+      <div><img src="${fighterData.imgUrl}" alt="${fighterData.name}"></div>
+      <div class="category"><p>Category: ${fighterData.category}</p></div>
+      <div class="age"><p>Age: ${fighterData.age}</p></div>
+      <div class="height"><p>Height: ${fighterData.height} inches</p></div>
+      <div class="weight"><p>Weight: ${fighterData.weight} lbs</p></div>
+      <div class="reach"><p>Reach: ${fighterData.reach} inches</p></div>
+      <div class="legReach"><p>Leg Reach: ${fighterData.legReach} inches</p></div>
+      <div class="style"><p>Fighting Style: ${fighterData.fightingStyle}</p></div>
+      <div class="wins"><p>Wins: ${fighterData.wins}</p></div>
+      <div class="losses"><p>Losses: ${fighterData.losses}</p></div>
+      <div class="draws"><p>Draws: ${fighterData.draws}</p></div>
+      <div class="debut"><p>Octagon Debut: ${fighterData.octagonDebut}</p></div>
+      <div class="birth"><p>Place of Birth: ${fighterData.placeOfBirth}</p></div>
+      <div class="trains"><p>Trains At: ${fighterData.trainsAt}</p></div>
+    `;
+  
+    return fighterDetailsDiv;
+  }
+  
+  window.onload = function() {
     getFighterDetails();
   };
+  
