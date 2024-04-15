@@ -1,7 +1,40 @@
-body {
+body{
     background: #333;
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 14px;
     margin: 0;
     padding: 0;
   }
+
+.table1 {
+  padding: 10px;
+}
+
+.container{
+  border-radius: 10px;
+}
+
+#previousRaceSection{
+  border-radius: 10px;
+}
+
+#prova{
+  border-radius: 10px;
+}
+
+.navbar-brand img {
+  width: 400px;
+  height: auto;
+}
+
+.navbar-custom {
+  background-color: #222;
+}
+
+.navbar-brand img {
+  width: 400px;
+  height: auto;
+}
+.navbar{
+  background: #000000;
+}
