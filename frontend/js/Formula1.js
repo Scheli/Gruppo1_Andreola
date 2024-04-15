@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     var selectYear = document.getElementById('selectYear');
 
-    for (var year = 1979; year <= 2024; year++) {
+    for (var year = 1950; year <= 2024; year++) {
         var option = document.createElement('option');
         option.textContent = year;
         option.value = year;
