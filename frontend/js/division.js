@@ -24,11 +24,9 @@ async function printDivisions(divisionId) {
         const divisionDiv = document.createElement("div");
         divisionDiv.classList.add("division");
 
-        // Create an anchor element
         const divisionLink = document.createElement("a");
-        // Set href attribute with the URL of the page
         divisionLink.href = `category.html`;
-        // Open link in the same tab
+        // Open link in the same 
         divisionLink.target = "_self";
 
         const divisionName = document.createElement("h2");
