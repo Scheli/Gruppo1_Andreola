@@ -32,7 +32,7 @@ async function calendario(selectedYear) {
     gare[0].Races.forEach(race => {
         const row = table.insertRow();
         const cellRaceName = row.insertCell();
-        const raceLink = document.createElement('a');
+        const raceLink = document.createElement('race');
         raceLink.href = "round.html";
         raceLink.textContent = race.raceName;
         raceLink.style.textDecoration = "none"; 
