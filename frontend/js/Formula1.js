@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     var selectYear = document.getElementById('selectYear');
+    var storedYear = localStorage.getItem('selectedYear'); 
 
     for (var year = 1950; year <= 2024; year++) {
         var option = document.createElement('option');
@@ -8,14 +9,19 @@ document.addEventListener('DOMContentLoaded', function() {
         selectYear.appendChild(option);
     }
 
-    selectYear.value = 2024;
+    if (storedYear) {
+        selectYear.value = storedYear;
+    } else {
+        selectYear.value = 2024; 
+    }
 
     selectYear.addEventListener('change', function() {
         var selectedYear = this.value;
+        localStorage.setItem('selectedYear', selectedYear);
         calendario(selectedYear);
     });
 
-    calendario(2024);
+    calendario(selectYear.value);
 });
 
 async function calendario(selectedYear) {
