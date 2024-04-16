@@ -119,12 +119,16 @@ export async function getNameFighter(db, UFC_Fighters, name) {
   return fighters;
 }
 
-export async function getDivisionFighter(db, UFC_Ranking, category) {
-  const data = await db.collection(UFC_Ranking).findOne({ categoryName : category  });
+export async function getDivision(db, UFC_Ranking) {
+  const data = await db.collection(UFC_Ranking).find().toArray();
   return data;
 }
 
-export async function getranking(db, rankingid) {
-  const data = await db.collection("UFC_Ranking").find({id : rankingid}).toArray();
-  return data;
-}
+// export async function getOneDivision(db,UFC_Ranking, name) {
+//   const data = await db.collection(UFC_Ranking).find({ name: name });
+//   return data;
+// }
+// export async function getranking(db, rankingid) {
+//   const data = await db.collection("UFC_Ranking").find({id : rankingid}).toArray();
+//   return data;
+// }

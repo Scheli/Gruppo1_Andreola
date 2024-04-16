@@ -12,7 +12,7 @@ import {
   getAllFighter,
   deleteUtente,
   getNameFighter,
-  getDivisionFighter
+  getDivision,
 } from "./db.js";
 
 const app = express();
@@ -51,20 +51,22 @@ app.get("/f1winrate", async (req, res) => {
     const driverStandings = await getSeason(db, "Driver_Standings", season);
 
     if (!driverStandings || driverStandings.length === 0) {
-      throw new Error("Dati delle classifiche non trovati per la stagione specificata");
+      throw new Error(
+        "Dati delle classifiche non trovati per la stagione specificata"
+      );
     }
 
     let wins = 0;
     let totalRaces = driverStandings[0].StandingsLists[0].round;
     let pilotFound = false;
-    let point =0
-    driverStandings.forEach(standing => {
-      standing.StandingsLists.forEach(standingsList => {
-        standingsList.DriverStandings.forEach(driverStanding => {
+    let point = 0;
+    driverStandings.forEach((standing) => {
+      standing.StandingsLists.forEach((standingsList) => {
+        standingsList.DriverStandings.forEach((driverStanding) => {
           if (driverStanding.Driver.familyName === pilot) {
             pilotFound = true;
             wins = parseInt(driverStanding.wins);
-            point= parseInt(driverStanding.points)
+            point = parseInt(driverStanding.points);
           }
         });
       });
@@ -74,28 +76,28 @@ app.get("/f1winrate", async (req, res) => {
       throw new Error("Pilota non trovato");
     }
 
-    const winPercentage = (wins === 0 ? 0 : (wins / totalRaces) * 100).toFixed(2);
-    const pointPerrace = (point/totalRaces).toFixed(2);
-    res.json({wins,point, winPercentage, pointPerrace });
+    const winPercentage = (wins === 0 ? 0 : (wins / totalRaces) * 100).toFixed(
+      2
+    );
+    const pointPerrace = (point / totalRaces).toFixed(2);
+    res.json({ wins, point, winPercentage, pointPerrace });
   } catch (error) {
     console.error("Si è verificato un errore:", error.message);
     res.status(500).send(error.message);
   }
 });
 
-app.get("/ufc/ranking",async (req,res) => {
-    try {
-      const rankingId = req.query.rankingId
+app.get("/ufc/ranking", async (req, res) => {
+  try {
+    const rankingId = req.query.rankingId;
 
-      const ranking = await getranking(db,rankingId);
-      res.json(ranking);
-    } catch (error) {
-      console.error("Error while fetching fighter:", error);
-      res.status(500).json({ error: "Internal server error" });
-    }
-})
-
-
+    const ranking = await getranking(db, rankingId);
+    res.json(ranking);
+  } catch (error) {
+    console.error("Error while fetching fighter:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 app.get("/ufc", async (req, res) => {
   try {
@@ -107,7 +109,7 @@ app.get("/ufc", async (req, res) => {
     if (result) {
       res.json(result);
     } else {
-      res.status(404).json({ error: "Fighter not found" }); 
+      res.status(404).json({ error: "Fighter not found" });
     }
   } catch (error) {
     console.error("Error while fetching fighter:", error);
@@ -115,45 +117,60 @@ app.get("/ufc", async (req, res) => {
   }
 });
 
-app.get('/ufc/fighters', async (req, res) => {
-
+app.get("/ufc/fighters", async (req, res) => {
   const result = await getAllFighter(db, "UFC_Fighters");
 
   if (result) {
-      res.json(result);
+    res.json(result);
   } else {
-      res.status(404).json({ error: "Fighter not found" });
+    res.status(404).json({ error: "Fighter not found" });
   }
 });
 
-app.get('/ufc/fighters/:name', async (req, res) => {
+app.get("/ufc/fighters/:name", async (req, res) => {
   try {
-      const fighterName = req.params.name;
-      // console.log(fighterName);
-      
-      const fighterDetails = await getNameFighter(db, "UFC_Fighters", fighterName);
-      
-      if (!fighterDetails) {
-          return res.status(404).json({ error: 'Fighter not found' });
-      }
-      res.json(fighterDetails);
+    const fighterName = req.params.name;
+    // console.log(fighterName);
+
+    const fighterDetails = await getNameFighter(
+      db,
+      "UFC_Fighters",
+      fighterName
+    );
+
+    if (!fighterDetails) {
+      return res.status(404).json({ error: "Fighter not found" });
+    }
+    res.json(fighterDetails);
   } catch (error) {
-      console.error('Error retrieving fighter details:', error);
-      res.status(500).json({ error: 'Internal server error' });
+    console.error("Error retrieving fighter details:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
-
-app.get('/ufc/:division', async (req, res) => {
-  const id = req.params.division;
-  console.log(id);
+app.get("/ufc/:rankings", async (req, res) => {
   try {
-    const fighterDetails = await getDivisionFighter(db, "UFC_Ranking", id);
-    res.json(fighterDetails); 
+    const divisionId = req.params.rankings; 
+    console.log(divisionId);
+    const fighters = await getDivision(db, "UFC_Ranking", divisionId); 
+    res.json({ fighters }); 
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal Server Error", message: error.message });
   }
 });
+// app.get("/ufc/:rankings/:name", async (req, res) => {
+//   try {
+//     const divisionId = req.params.rankings; 
+//     const name = req.body.name;
+//     console.log(divisionId);
+//     const fighters = await getDivision(db, "UFC_Ranking", divisionId , name); 
+//     res.json({ fighters }); 
+//   } catch (error) {
+//     console.error("Error:", error);
+//     res.status(500).json({ error: "Internal Server Error", message: error.message });
+//   }
+// });
+
 
 
 app.post("/utenti", async (req, res) => {
@@ -165,10 +182,12 @@ app.post("/utenti", async (req, res) => {
     const utente = {
       username,
       email,
-      password
+      password,
     };
 
-    const existingUser = await db.collection('utenti').findOne({ email: email });
+    const existingUser = await db
+      .collection("utenti")
+      .findOne({ email: email });
     if (existingUser) {
       res.status(400).json({ error: "L'email è già stata utilizzata" });
       return;
@@ -181,7 +200,10 @@ app.post("/utenti", async (req, res) => {
       res.status(500).json({ error: "Errore durante l'aggiunta dell'utente" });
     }
   } catch (error) {
-    console.error("Errore durante la gestione della richiesta POST '/utenti':", error);
+    console.error(
+      "Errore durante la gestione della richiesta POST '/utenti':",
+      error
+    );
     res.status(500).json({ error: "Errore interno del server" });
   }
 });
@@ -191,7 +213,7 @@ app.get("/utenti", async (req, res) => {
 
   try {
     const utente = await db.collection("utenti").findOne({ email: email });
-    res.json(utente ? [utente] : null); 
+    res.json(utente ? [utente] : null);
   } catch (error) {
     console.error("Errore durante il recupero dell'utente:", error);
     res.status(500).json({ error: "Errore interno del server" });
@@ -213,8 +235,6 @@ app.delete("/utenti/:email", async (req, res) => {
   }
 });
 
-
-
 app.listen(8080, async () => {
   try {
     db = await connectToDB();
@@ -223,4 +243,3 @@ app.listen(8080, async () => {
     console.error(e);
   }
 });
-
