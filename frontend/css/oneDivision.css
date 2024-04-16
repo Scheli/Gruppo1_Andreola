@@ -97,13 +97,13 @@ p.utente a {
 }
 
 .divisions {
-  /* width: 100%;
+  width: 100%;
   display: grid;
   gap: 1rem;
   list-style: none;
   grid-auto-rows: 13rem;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
-  justify-content: center; */
+  justify-content: center;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
