@@ -50,6 +50,14 @@ swiper-slide img {
   background: #000000;
 }
 
+.table1 {
+  padding: 10px;
+}
+
+.container{
+  border-radius: 10px;
+}
+
 .above-border {
   width: auto;
   text-align: center;
