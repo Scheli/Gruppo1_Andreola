@@ -18,14 +18,17 @@ export async function connectToDB() {
 export async function deleteUtente(email) {
   try {
     const db = await connectToDB();
-    const result = await db.collection('utenti').deleteOne({ email: email });
+    const result = await db.collection("utenti").deleteOne({ email: email });
     if (result.deletedCount === 1) {
       return { message: "Utente eliminato con successo" };
     } else {
       return { error: "L'utente non è stato trovato" };
     }
   } catch (err) {
-    console.error("Si è verificato un errore durante l'eliminazione dell'utente:", err);
+    console.error(
+      "Si è verificato un errore durante l'eliminazione dell'utente:",
+      err
+    );
     return { error: "Errore durante l'eliminazione dell'utente" };
   }
 }
@@ -33,13 +36,15 @@ export async function deleteUtente(email) {
 export async function aggiungiUtente(utente) {
   try {
     const db = await connectToDB();
-    const existingUser = await db.collection('utenti').findOne({ email: utente.email });
+    const existingUser = await db
+      .collection("utenti")
+      .findOne({ email: utente.email });
 
     if (existingUser) {
-      return null; 
+      return null;
     }
 
-    const result = await db.collection('utenti').insertOne(utente);
+    const result = await db.collection("utenti").insertOne(utente);
     return result.insertedId;
   } catch (err) {
     console.error("Qualcosa è andato storto nell'inserimento:", err);
@@ -54,7 +59,6 @@ export async function getAll(db, resource) {
   const data = await db.collection(resource).find().toArray();
   return data;
 }
-
 
 export async function getOne(db, resource, id) {
   const data = await db.collection(resource).findOne({ _id: new ObjectId(id) });
@@ -115,7 +119,7 @@ export async function getFighter(db, UFC_Fighters, id) {
 
 export async function getNameFighter(db, UFC_Fighters, name) {
   const cursor = await db.collection(UFC_Fighters).find({ name: name });
-  const fighters = await cursor.toArray(); 
+  const fighters = await cursor.toArray();
   return fighters;
 }
 
@@ -128,7 +132,12 @@ export async function getDivision(db, UFC_Ranking) {
 //   const data = await db.collection(UFC_Ranking).find({ name: name });
 //   return data;
 // }
-// export async function getranking(db, rankingid) {
-//   const data = await db.collection("UFC_Ranking").find({id : rankingid}).toArray();
-//   return data;
-// }
+
+
+export async function getranking(db, rankingid) {
+  const data = await db
+    .collection("UFC_Ranking")
+    .find({ id: rankingid })
+    .toArray();
+  return data;
+}

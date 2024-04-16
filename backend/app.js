@@ -12,7 +12,7 @@ import {
   getAllFighter,
   deleteUtente,
   getNameFighter,
-  getDivision,
+  getranking
 } from "./db.js";
 
 const app = express();
@@ -147,29 +147,31 @@ app.get("/ufc/fighters/:name", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-app.get("/ufc/:rankings", async (req, res) => {
+
+app.get("/ufc/ranking",async (req,res) => {
   try {
-    const divisionId = req.params.rankings; 
-    console.log(divisionId);
-    const fighters = await getDivision(db, "UFC_Ranking", divisionId); 
-    res.json({ fighters }); 
+    const rankingId = req.query.rankingId
+
+    const ranking = await getranking(db,rankingId);
+    res.json(ranking);
   } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Internal Server Error", message: error.message });
+    console.error("Error while fetching fighter:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-});
+})
+
 // app.get("/ufc/:rankings/:name", async (req, res) => {
 //   try {
 //     const divisionId = req.params.rankings; 
-//     const name = req.body.name;
-//     console.log(divisionId);
-//     const fighters = await getDivision(db, "UFC_Ranking", divisionId , name); 
-//     res.json({ fighters }); 
-//   } catch (error) {
-//     console.error("Error:", error);
-//     res.status(500).json({ error: "Internal Server Error", message: error.message });
-//   }
-// });
+//      const name = req.body.name;
+//      console.log(divisionId);
+//      const fighters = await getDivision(db, "UFC_Ranking", divisionId , name); 
+//      res.json({ fighters }); 
+//    } catch (error) {
+//      console.error("Error:", error);
+//      res.status(500).json({ error: "Internal Server Error", message: error.message });
+//    }
+//  });
 
 
 
