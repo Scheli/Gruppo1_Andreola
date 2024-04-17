@@ -12,6 +12,7 @@ import {
   getAllFighter,
   deleteUtente,
   getNameFighter,
+  getDivision,
   getRanking
 } from "./db.js";
 
@@ -129,6 +130,7 @@ app.get("/f1overtake", async (req, res) => {
 app.get("/ufc/ranking", async (req, res) => {
   
   const rankingId = req.query.rankingId;
+  console.log(rankingId);
   try {
     const ranking = await getRanking(db, rankingId);
     res.json(ranking);
@@ -139,16 +141,15 @@ app.get("/ufc/ranking", async (req, res) => {
 });
 
 // Route per ottenere tutti i Ranking
-app.get("/ufc/allranking",async (req ,res)=> {
+app.get("/ufc/allranking", async (req, res) => {
   try {
-    const ranking = await getAll(db,"UFC_Ranking")
-    res.json(ranking)
+    const ranking = await getDivision(db, "UFC_Ranking");
+    res.json({ fighters: ranking }); 
   } catch (error) {
-    console.error("Errore durante il recupero del ranking:", error);
-    res.status(500).json({ error: "Errore interno del server" });
+    console.error("Error while retrieving ranking:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-})
-
+});
 // Route per ottenere informazioni su un lottatore UFC
 app.get("/ufc", async (req, res) => {
   try {
@@ -176,6 +177,7 @@ app.get("/ufc/fighters", async (req, res) => {
     res.status(404).json({ error: "Lottatori non trovati" });
   }
 });
+
 
 // Route per ottenere i dettagli di un lottatore UFC per nome
 app.get("/ufc/fighters/:name", async (req, res) => {

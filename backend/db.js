@@ -106,6 +106,8 @@ export async function updateOne(db, resource, id, newValues) {
 }
 
 export async function getAllFighter(db, UFC_Fighters) {
+    // console.log(db ,'db')
+    // console.log(UFC_Fighters , 'UFC')
   const data = await db.collection(UFC_Fighters).find().toArray();
   return data;
 }
@@ -129,6 +131,7 @@ export async function getDivision(db) {
 }
 
 export async function getRanking(db,categoryName) {
+  console.log(categoryName)
   try {
       const data = await db.collection("UFC_Ranking").find({ categoryName: categoryName }).toArray(); 
       return data;
