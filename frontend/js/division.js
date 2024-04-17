@@ -1,6 +1,6 @@
 async function printDivisions(divisionId) {
   try {
-    const response = await fetch(`http://localhost:8080/ufc/${divisionId}`, {
+    const response = await fetch(`http://localhost:8080/ufc/allranking`, {
       headers: {
         Accept: "application/json",
       },
@@ -43,7 +43,3 @@ async function printDivisions(divisionId) {
   }
 }
 
-window.onload = function () {
-  const divisionId = "Flyweight"
-  printDivisions(divisionId);
-};

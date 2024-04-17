@@ -127,8 +127,9 @@ app.get("/f1overtake", async (req, res) => {
 
 // Route per ottenere il ranking UFC
 app.get("/ufc/ranking", async (req, res) => {
+  
+  const rankingId = req.query.rankingId;
   try {
-    const rankingId = req.query.rankingId;
     const ranking = await getRanking(db, rankingId);
     res.json(ranking);
   } catch (error) {
@@ -136,6 +137,17 @@ app.get("/ufc/ranking", async (req, res) => {
     res.status(500).json({ error: "Errore interno del server" });
   }
 });
+
+// Route per ottenere tutti i Ranking
+app.get("/ufc/allranking",async (req ,res)=> {
+  try {
+    const ranking = await getAll(db,"UFC_Ranking")
+    res.json(ranking)
+  } catch (error) {
+    console.error("Errore durante il recupero del ranking:", error);
+    res.status(500).json({ error: "Errore interno del server" });
+  }
+})
 
 // Route per ottenere informazioni su un lottatore UFC
 app.get("/ufc", async (req, res) => {

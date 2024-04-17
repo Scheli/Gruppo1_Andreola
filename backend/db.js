@@ -123,20 +123,22 @@ export async function getNameFighter(db, UFC_Fighters, name) {
   return fighters;
 }
 
-export async function getDivision(db, UFC_Ranking) {
+export async function getDivision(db) {
   const data = await db.collection(UFC_Ranking).find().toArray();
   return data;
 }
 
-export async function getRanking(db, UFC_Ranking, categoryName) {
+export async function getRanking(db,categoryName) {
   try {
-      const data = await db.collection(UFC_Ranking).find({ categoryName: categoryName }).toArray(); 
+      const data = await db.collection("UFC_Ranking").find({ categoryName: categoryName }).toArray(); 
       return data;
   } catch (error) {
       console.error("Errore durante il recupero del ranking:", error);
       throw error;
   }
 }
+
+
 
 /*
 export async function getranking(db, rankingid) {
