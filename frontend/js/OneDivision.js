@@ -1,9 +1,9 @@
 window.onload = async function () {
-  // Get the category name from the URL hash
+  
   const encodedCategoryName = window.location.hash.substring(1);
-  const categoryName = atob(encodedCategoryName); // Decode Base64 encoded category name
+  const categoryName = atob(encodedCategoryName);
 
-  // Fetch data based on the category name
+  
   try {
     const response = await fetch(
       `http://localhost:8080/ufc/ranking?rankingId=${encodeURIComponent(
@@ -40,16 +40,16 @@ window.onload = async function () {
           divisionLink.textContent = fighter.name;
           divisionLink.href = `https://example.com/${fighter.id}`;
           divisionLink.classList.add("fight");
-          fighterItem.appendChild(divisionLink); // Append the link to the list item
-          fightersList.appendChild(fighterItem); // Append the list item to the list
+          fighterItem.appendChild(divisionLink); 
+          fightersList.appendChild(fighterItem); 
 
           divisionLink.addEventListener("click", (event) => {
-            event.preventDefault(); // Prevent default action of the link
+            event.preventDefault(); 
             window.location.href = `fighter-details.html?name=${encodeURIComponent(fighter.name)}`;
           });
         });
 
-        divisionContainer.appendChild(fightersList); // Append the list to the category container
+        divisionContainer.appendChild(fightersList); 
         displayedCategories[category.categoryName] = true;
       }
     });
