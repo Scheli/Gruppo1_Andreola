@@ -100,28 +100,26 @@ app.get("/f1overtake", async (req, res) => {
   try {
     const season = req.query.season;
     const round = req.query.round;
+    const driver = req.query.driver;
+    let pilotFound = false;
+    let positionGain = 0;
+    let start_Position
+    let finish_position
     const data = await getOnerace(db, "Race", season, round);
-    
-    const overtakes = {}; // Oggetto per registrare i sorpassi di ogni pilota
-
+    console.log( data.Races[0].Results)
     data.Races[0].Results.forEach((result) => {
-      const driver = result.Driver.familyName;
-      const startPosition = parseInt(result.grid);
-      const finishPosition = parseInt(result.position);
-
-      console.log(`${driver}: start position = ${startPosition}, finish position = ${finishPosition}`);
-
-      const positionGain = startPosition - finishPosition;
-
-      
-      overtakes[driver] = overtakes[driver] ? overtakes[driver] + positionGain : positionGain;
-    });
-
+        if (result.Driver.familyName === driver) {
+          pilotFound = true;
+          positionGain = parseInt(result.position) - parseInt(result.grid);
+          finish_position=result.position;
+          start_Position=result.grid;
+        }
+      });
     
-    const topThreeOvertakes = Object.entries(overtakes)
-      .sort((a, b) => b[1] - a[1]) 
-      .slice(0, 3); 
-    res.json(topThreeOvertakes);
+    if (!pilotFound) {
+      throw new Error("Pilota non trovato");
+    }
+    res.json({ start_Position,finish_position,positionGain });
   } catch (error) {
     console.error("Si è verificato un errore:", error.message);
     res.status(500).send(error.message);
@@ -162,7 +160,6 @@ app.get("/f1overtakes", async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-
 
 // Route per ottenere il ranking UFC
 app.get("/ufc/ranking", async (req, res) => {
