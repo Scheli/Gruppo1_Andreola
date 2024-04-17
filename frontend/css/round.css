@@ -4,6 +4,23 @@ body{
     font-size: 14px;
     margin: 0;
     padding: 0;
+    color: white;
   }
 
+  .navbar-brand img {
+    width: 400px;
+    height: auto;
+  }
+  
+  .navbar-custom {
+    background-color: #222;
+  }
+  
+  .navbar-brand img {
+    width: 400px;
+    height: auto;
+  }
+  .navbar{
+    background: #000000;
+  }
   
