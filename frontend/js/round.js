@@ -50,7 +50,6 @@ function RoundDetailDiv(roundata) {
                 const driverNameTag = document.createElement("p");
                 driverNameTag.textContent = `Pilota: ${result.Driver.givenName} ${result.Driver.familyName}`;
                 resultContainer.appendChild(driverNameTag);
-
                 const nationalityTag = document.createElement("p");
                 nationalityTag.textContent = `Nazionalità: ${result.Driver.nationality}`;
                 resultContainer.appendChild(nationalityTag);

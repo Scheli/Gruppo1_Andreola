@@ -133,7 +133,7 @@ app.get("/f1overtakes", async (req, res) => {
     const round = req.query.round;
     const data = await getOnerace(db, "Race", season, round);
     
-    const overtakes = {}; 
+    const overtakes = {};
 
     data.Races[0].Results.forEach((result) => {
       if (result.status === "Finished") { 

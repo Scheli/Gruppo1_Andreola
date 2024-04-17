@@ -12,28 +12,36 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg  navbar-custom border-bottom border-body" data-bs-theme="dark">
-        <div class="container">
-            <a class="navbar-brand fs-4" href="index.html">
-                <img src="immagini/logo-removebg-preview.png" alt="Bootstrap" />
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="immagini/logo.png" alt="Logo" class="img-fluid" />
             </a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link fs-3" href="index.html">Home</a>
+                        <a class="nav-link fw-bold text-light" href="mma.html">MMA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold text-light" href="Formula1.html">Formula 1</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <h2 class="text-light">Informazione campionato Formula 1</h2>
+    <center>
+        <h2 class="text-light">Informazione campionato Formula 1</h2>
+    </center>
 
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="input-group mb-3">
-                    <label class="input-group-text" for="selectYear">Seleziona l'anno</label>
-                    <select class="form-select" id="selectYear"></select>
+                    <label class="input-group-text bg-warning" for="selectYear">Seleziona l'anno</label>
+                    <select class="form-select bg-warning" id="selectYear"></select>
                 </div>
             </div>
         </div>
@@ -88,48 +96,48 @@
     </div>
     <script type="module">
         import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
-       Chatbot.init({
-           chatflowid: "51a03c2d-62c6-42ef-97ad-f4e936da93f2",
-           apiHost: "https://statsphere.onrender.com",
-         chatflowConfig: {
-           // topK: 2
-         },
-         theme: {
-     "button": {
-       "backgroundColor": "#ffd500",
-       "right": 20,
-       "bottom": 20,
-       "size": "medium",
-       "iconColor": "#000000",
-       "customIconSrc": "https://cdn-icons-png.flaticon.com/512/6134/6134346.png"
-     },
-     "chatWindow": {
-       "welcomeMessage": "Ciao! io sono un  AI progettata per rispondere alle tue domande riguardanti StatSphere,sentiti pure di consultarmi quando vuoi!",
-       "backgroundColor": "#1f1f1f",
-       "fontSize": 16,
-       "poweredByTextColor": "#ffffff",
-       "botMessage": {
-         "backgroundColor": "#ffffff",
-         "textColor": "#000000",
-         "showAvatar": true,
-         "avatarSrc": "https://cdn-icons-png.flaticon.com/512/6134/6134346.png"
-       },
-       "userMessage": {
-         "backgroundColor": "#ffffff",
-         "textColor": "#000000",
-         "showAvatar": true,
-         "avatarSrc": "https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
-       },
-       "textInput": {
-         "placeholder": "Inserisci la tua domanda",
-         "backgroundColor": "#ffffff",
-         "textColor": "#303235",
-         "sendButtonColor": "#3B81F6"
-       }
-     }
-   }
-       })
-     </script>
+        Chatbot.init({
+            chatflowid: "51a03c2d-62c6-42ef-97ad-f4e936da93f2",
+            apiHost: "https://statsphere.onrender.com",
+            chatflowConfig: {
+                // topK: 2
+            },
+            theme: {
+                "button": {
+                    "backgroundColor": "#ffd500",
+                    "right": 20,
+                    "bottom": 20,
+                    "size": "medium",
+                    "iconColor": "#000000",
+                    "customIconSrc": "https://cdn-icons-png.flaticon.com/512/6134/6134346.png"
+                },
+                "chatWindow": {
+                    "welcomeMessage": "Ciao! io sono un  AI progettata per rispondere alle tue domande riguardanti StatSphere,sentiti pure di consultarmi quando vuoi!",
+                    "backgroundColor": "#1f1f1f",
+                    "fontSize": 16,
+                    "poweredByTextColor": "#ffffff",
+                    "botMessage": {
+                        "backgroundColor": "#ffffff",
+                        "textColor": "#000000",
+                        "showAvatar": true,
+                        "avatarSrc": "https://cdn-icons-png.flaticon.com/512/6134/6134346.png"
+                    },
+                    "userMessage": {
+                        "backgroundColor": "#ffffff",
+                        "textColor": "#000000",
+                        "showAvatar": true,
+                        "avatarSrc": "https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+                    },
+                    "textInput": {
+                        "placeholder": "Inserisci la tua domanda",
+                        "backgroundColor": "#ffffff",
+                        "textColor": "#303235",
+                        "sendButtonColor": "#3B81F6"
+                    }
+                }
+            }
+        })
+    </script>
     <script src="/frontend/js/campionato.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
