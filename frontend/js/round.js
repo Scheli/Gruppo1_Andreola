@@ -18,9 +18,10 @@ async function getRace() {
         const round = await response.json();
 
 
-        const roundata = Array.isArray(round) ? round[0] : round;
+        console.log(round.Races[0].Results)
+       
 
-        const rounddetaildiv = RoundDetailDiv(roundata);
+        const rounddetaildiv = RoundDetailDiv(round.Races[0].Results);
 
         container.appendChild(rounddetaildiv);
 
@@ -36,8 +37,8 @@ function RoundDetailDiv(roundata) {
     const statsContainer = document.createElement("div");
     statsContainer.classList.add("round-stats");
 
-    if (roundata && roundata.Results && roundata.Results.length > 0) {
-        roundata.Results.forEach(result => {
+    
+        roundata.forEach(result => {
             const resultContainer = document.createElement("div");
             resultContainer.classList.add("result-item");
 
@@ -67,17 +68,13 @@ function RoundDetailDiv(roundata) {
 
             statsContainer.appendChild(resultContainer);
         });
-    } else {
-        console.warn("Nessun risultato disponibile per questa gara:", roundata);
-        const noResultsMessage = document.createElement("p");
-        noResultsMessage.textContent = "Nessun risultato disponibile per questa gara.";
-        statsContainer.appendChild(noResultsMessage);
-    }
+   
 
     rounddetaildiv.appendChild(statsContainer);
 
     return rounddetaildiv;
 }
+
 
 const username = localStorage.getItem('username');
 

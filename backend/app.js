@@ -90,6 +90,46 @@ app.get("/f1winrate", async (req, res) => {
 app.get("/ufc/ranking", async (req, res) => {
   try {
     const rankingId = req.query.rankingId;
+app.get("/f1overtake", async (req,res) =>{
+  try {
+    const season = req.query.season;
+    const round = req.query.round;
+    const driver = req.query.driver;
+    let pilotFound = false;
+    let positionGain = 0; // Corrected variable name
+    const data = await getOnerace(db, "Race", season, round);
+    data.forEach(race => {
+       race.Results.forEach(result => {
+           if (result.Driver.familyName === driver) {
+             pilotFound = true;
+             positionGain = parseInt(result.position) - parseInt(result.grid); // Corrected parseInt function
+           }
+       });
+    });
+    if (!pilotFound) {
+       throw new Error("Pilota non trovato");
+    }
+    res.json({ positionGain });
+ } catch (error) {
+    console.error("Si è verificato un errore:", error.message);
+    res.status(500).send(error.message);
+ }
+ 
+  
+})
+
+app.get("/ufc/ranking",async (req,res) => {
+    try {
+      const rankingId = req.query.rankingId
+
+      const ranking = await getranking(db,rankingId);
+      res.json(ranking);
+    } catch (error) {
+      console.error("Error while fetching fighter:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+})
+
 
     const ranking = await getranking(db, rankingId);
     res.json(ranking);
