@@ -91,3 +91,8 @@ async function piloti(selectedYear) {
 
 
 }
+const username = localStorage.getItem('username');
+
+if (!username) {
+    window.location.replace("/frontend/login.html");
+}

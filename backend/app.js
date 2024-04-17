@@ -202,16 +202,47 @@ app.get("/ufc/fighters/:name", async (req, res) => {
 // Route per aggiungere un utente
 app.post("/utenti", async (req, res) => {
   try {
+    const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
+
+    const utente = {
+      username,
+      email,
+      password,
+    };
+
+    const existingUser = await db
+      .collection("utenti")
+      .findOne({ email: email });
+    if (existingUser) {
+      res.status(400).json({ error: "L'email è già stata utilizzata" });
+      return;
+    }
+
+    const utenti = await aggiungiUtente(utente);
+    if (utenti) {
+      res.status(200).json(utente);
+    } else {
+      res.status(500).json({ error: "Errore durante l'aggiunta dell'utente" });
+    }
     // Gestione della richiesta POST per aggiungere un utente
   } catch (error) {
+    console.error(
+      "Errore durante la gestione della richiesta POST '/utenti':",
+      error
+    );
     console.error("Errore durante la gestione della richiesta POST '/utenti':", error);
     res.status(500).json({ error: "Errore interno del server" });
   }
 });
 
-// Route per ottenere un utente per email
 app.get("/utenti", async (req, res) => {
+  const { email } = req.query;
+
   try {
+    const utente = await db.collection("utenti").findOne({ email: email });
+    res.json(utente ? [utente] : null);
     // Gestione della richiesta GET per ottenere un utente per email
   } catch (error) {
     console.error("Errore durante il recupero dell'utente:", error);
@@ -221,14 +252,20 @@ app.get("/utenti", async (req, res) => {
 
 // Route per eliminare un utente
 app.delete("/utenti/:email", async (req, res) => {
+  const email = req.params.email;
   try {
+    const result = await deleteUtente(email);
+    if (result.message) {
+      res.json(result);
+    } else {
+      res.status(404).json(result);
+    }
     // Gestione della richiesta DELETE per eliminare un utente
   } catch (error) {
     console.error("Errore durante l'eliminazione dell'utente:", error);
     res.status(500).json({ error: "Errore interno del server" });
   }
 });
-
 // Avvio del server
 app.listen(8080, async () => {
   try {

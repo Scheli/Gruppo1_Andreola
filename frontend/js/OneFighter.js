@@ -63,4 +63,8 @@
     window.onload = function() {
       getFighterDetails();
     };
-    
+const username = localStorage.getItem('username');
+
+if (!username) {
+    window.location.replace("/frontend/login.html");
+}

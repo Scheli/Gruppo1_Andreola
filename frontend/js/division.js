@@ -43,3 +43,8 @@ async function printDivisions(divisionId) {
   }
 }
 
+const username = localStorage.getItem('username');
+
+if (!username) {
+    window.location.replace("/frontend/login.html");
+}
