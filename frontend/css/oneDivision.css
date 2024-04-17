@@ -6,15 +6,21 @@ body {
   padding: 0;
 }
 
-.navbar-brand img {
-  height: auto;
+.navbar-nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
-.navbar {
-  background: #000000;
+#dark-mode-btn {
+  margin-left: auto;
 }
 
 .navbar-brand img {
+  width: 70px;
   height: auto;
+}
+.navbar {
+  background-color: #000000;
 }
 
 .above-border {
