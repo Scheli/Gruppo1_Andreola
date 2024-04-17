@@ -1,41 +1,29 @@
-async function OneDivision(divisionId) {
+window.onload = async function () {
+  // Retrieve category name from session storage
+  const categoryName = sessionStorage.getItem("categoryName");
+
+  if (categoryName) {
     try {
-      const response = await fetch(`http://localhost:8080/ufc/${divisionId}`, {
+      const response = await fetch(`http://localhost:8080/ufc/ranking?rankingId=${encodeURIComponent(categoryName)}`, {
         headers: {
           Accept: "application/json",
         },
       });
-  
+
       if (!response.ok) {
-        throw new Error("Failed to fetch UFC categories data");
+        throw new Error('Network response was not ok');
       }
-  
-      const categoriesData = await response.json();
-      const fighters = categoriesData.fighters[0].fighters; 
-      const container = document.getElementById("division"); 
-  
-      const divisionsContainer = document.createElement("div");
-      divisionsContainer.classList.add("divisions"); 
-  
-      for (const fighter of fighters) {
-        const fighterName = fighter.name;
-  
-        const fighterDiv = document.createElement("div");
-        fighterDiv.classList.add("fighter");
-  
-        const fighterNameElement = document.createElement("h2");
-        fighterNameElement.textContent = fighterName;
-  
-        fighterDiv.appendChild(fighterNameElement);
-        divisionsContainer.appendChild(fighterDiv);
-      }
-  
-      container.appendChild(divisionsContainer);
+
+      const divisionData = await response.json();
+      console.log(divisionData); // Log division data
+
+      // Display division data on the page
+      const divisionContainer = document.getElementById("divisionData");
+      divisionContainer.textContent = JSON.stringify(divisionData); // Example: Display the JSON data as text
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error fetching division data:", error);
     }
+  } else {
+    console.error("Category name not found in session storage");
   }
-  
-window.onload = () => {
-    OneDivision();
-}
+};

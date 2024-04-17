@@ -141,15 +141,16 @@ app.get("/ufc/ranking", async (req, res) => {
 });
 
 // Route per ottenere tutti i Ranking
-app.get("/ufc/allranking", async (req, res) => {
+app.get("/ufc/allranking",async (req ,res)=> {
   try {
-    const ranking = await getDivision(db, "UFC_Ranking");
-    res.json({ fighters: ranking }); 
+    const ranking = await getAll(db,"UFC_Ranking")
+    res.json(ranking)
   } catch (error) {
-    console.error("Error while retrieving ranking:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Errore durante il recupero del ranking:", error);
+    res.status(500).json({ error: "Errore interno del server" });
   }
-});
+})
+
 // Route per ottenere informazioni su un lottatore UFC
 app.get("/ufc", async (req, res) => {
   try {

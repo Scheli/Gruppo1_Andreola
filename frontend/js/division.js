@@ -1,4 +1,4 @@
-async function printDivisions(divisionId) {
+async function printDivisions() {
   try {
     const response = await fetch(`http://localhost:8080/ufc/allranking`, {
       headers: {
@@ -6,34 +6,33 @@ async function printDivisions(divisionId) {
       },
     });
 
-  
     const categoriesData = await response.json();
-    const categories = categoriesData.fighters.map((category) => category.id);
-    console.log(categories);
-    const container = document.getElementById("division"); // Assuming you have a container with id "division" in your HTML
-    const displayedDivisions = new Set(); // Use a set to keep track of displayed divisions
+    const container = document.getElementById("division");
+    const displayedDivisions = new Set();
 
     const divisionsContainer = document.createElement("div");
-    divisionsContainer.classList.add("divisions"); // Apply the 'divisions' class to the parent div
+    divisionsContainer.classList.add("divisions");
 
-    for (const category of categories) {
-      if (!displayedDivisions.has(category)) {
+    for (const category of categoriesData) {
+      if (!displayedDivisions.has(category.name)) {
         const divisionDiv = document.createElement("div");
         divisionDiv.classList.add("division");
-
         const divisionLink = document.createElement("a");
-        divisionLink.href = `category.html`;
-        // Open link in the same 
-        divisionLink.target = "_self";
+        divisionLink.href = "category.html";
+        divisionLink.addEventListener("click", function() {
+        console.log("category",category.name)
+
+          sessionStorage.setItem("categoryName", category.name);
+        });
 
         const divisionName = document.createElement("h2");
-        divisionName.textContent = category;
+        divisionName.textContent = category.name;
 
-        divisionLink.appendChild(divisionName); // Append divisionName to anchor element
-        divisionDiv.appendChild(divisionLink); // Append anchor element to divisionDiv
+        divisionLink.appendChild(divisionName);
+        divisionDiv.appendChild(divisionLink);
         divisionsContainer.appendChild(divisionDiv);
 
-        displayedDivisions.add(category);
+        displayedDivisions.add(category.name);
       }
     }
 
@@ -43,3 +42,6 @@ async function printDivisions(divisionId) {
   }
 }
 
+window.onload = function () {
+  printDivisions();
+};
