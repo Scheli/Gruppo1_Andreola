@@ -77,6 +77,12 @@ export async function getOnerace(db, resource, season, round) {
   return data;
 }
 
+export async function getPosition(db, resource, season, round, position) {
+  const data = await db
+    .collection(resource)
+    .findOne({ season: season, round: round, position: position })
+}
+
 export async function createMany(db, resource, newitem) {
   const data = await db.collection(resource).insertMany(newitem);
 }
@@ -133,11 +139,11 @@ export async function getDivision(db) {
 export async function getRanking(db,categoryName) {
   console.log(categoryName)
   try {
-      const data = await db.collection("UFC_Ranking").find({ categoryName: categoryName }).toArray(); 
-      return data;
+    const data = await db.collection("UFC_Ranking").find({ categoryName: categoryName }).toArray();
+    return data;
   } catch (error) {
-      console.error("Errore durante il recupero del ranking:", error);
-      throw error;
+    console.error("Errore durante il recupero del ranking:", error);
+    throw error;
   }
 }
 

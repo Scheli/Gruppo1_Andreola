@@ -61,7 +61,7 @@ function RoundDetailDiv(roundata) {
             if (result.Constructor) {
                 const constructorTag = document.createElement("p");
                 constructorTag.textContent = `Scuderia: ${result.Constructor.name}`;
-                resultContainer.appendChild(constructorTag);
+                resultContainer.appendChild(constructorTag) + '';
             } else {
                 console.warn("Dati scuderia mancanti per il risultato:", result);
             }
