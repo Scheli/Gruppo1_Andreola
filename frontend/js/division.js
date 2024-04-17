@@ -6,10 +6,7 @@ async function printDivisions(divisionId) {
       },
     });
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch UFC categories data");
-    }
-
+  
     const categoriesData = await response.json();
     const categories = categoriesData.fighters.map((category) => category.id);
     console.log(categories);
@@ -47,6 +44,6 @@ async function printDivisions(divisionId) {
 }
 
 window.onload = function () {
-  const divisionId = "6617da04c9082c8049eb7901"; // Pass the ID of the UFC division you want to retrieve
+  const divisionId = "Flyweight"
   printDivisions(divisionId);
 };

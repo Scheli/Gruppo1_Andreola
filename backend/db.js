@@ -128,16 +128,19 @@ export async function getDivision(db, UFC_Ranking) {
   return data;
 }
 
-// export async function getOneDivision(db,UFC_Ranking, name) {
-//   const data = await db.collection(UFC_Ranking).find({ name: name });
-//   return data;
-// }
+export async function getRanking(db, UFC_Ranking, categoryName) {
+  try {
+      const data = await db.collection(UFC_Ranking).find({ categoryName: categoryName }).toArray(); 
+      return data;
+  } catch (error) {
+      console.error("Errore durante il recupero del ranking:", error);
+      throw error;
+  }
+}
 
-
+/*
 export async function getranking(db, rankingid) {
-  const data = await db
-    .collection("UFC_Ranking")
-    .find({ id: rankingid })
-    .toArray();
+  const data = await db.collection("UFC_Ranking").find({ categoryName: rankingid }).toArray();
   return data;
 }
+*/

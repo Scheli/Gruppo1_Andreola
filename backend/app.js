@@ -12,38 +12,45 @@ import {
   getAllFighter,
   deleteUtente,
   getNameFighter,
-  getranking
+  getRanking
 } from "./db.js";
 
 const app = express();
-let db; //db connection
+let db; // Connessione al database
 
 app.use(express.json());
 app.use(cors());
 
+// Route per ottenere informazioni sulla Formula 1
 app.get("/f1", async (req, res) => {
-  const resource = req.query.resource;
-  const season = req.query.season;
-  const round = req.query.round;
+  try {
+    const resource = req.query.resource;
+    const season = req.query.season;
+    const round = req.query.round;
 
-  if (season && round) {
-    const result = await getOnerace(db, resource, season, round);
-    if (result) {
-      res.json(result);
-    } else {
-      res.status(404).json({ message: "errore" });
-    }
-  } else if (season) {
-    const result = await getSeason(db, resource, season);
+    if (season && round) {
+      const result = await getOnerace(db, resource, season, round);
+      if (result) {
+        res.json(result);
+      } else {
+        res.status(404).json({ message: "Risorsa non trovata" });
+      }
+    } else if (season) {
+      const result = await getSeason(db, resource, season);
 
-    if (result) {
-      res.json(result);
-    } else {
-      res.status(404).json({ message: "errore" });
+      if (result) {
+        res.json(result);
+      } else {
+        res.status(404).json({ message: "Risorsa non trovata" });
+      }
     }
+  } catch (error) {
+    console.error("Si è verificato un errore:", error.message);
+    res.status(500).send(error.message);
   }
 });
 
+// Route per calcolare il tasso di vittoria di un pilota di F1
 app.get("/f1winrate", async (req, res) => {
   try {
     const season = req.query.season;
@@ -79,99 +86,89 @@ app.get("/f1winrate", async (req, res) => {
     const winPercentage = (wins === 0 ? 0 : (wins / totalRaces) * 100).toFixed(
       2
     );
-    const pointPerrace = (point / totalRaces).toFixed(2);
-    res.json({ wins, point, winPercentage, pointPerrace });
+    const pointPerRace = (point / totalRaces).toFixed(2);
+    res.json({ wins, point, winPercentage, pointPerRace });
   } catch (error) {
     console.error("Si è verificato un errore:", error.message);
     res.status(500).send(error.message);
   }
 });
 
-app.get("/ufc/ranking", async (req, res) => {
-  try {
-    const rankingId = req.query.rankingId;
-app.get("/f1overtake", async (req,res) =>{
+// Route per calcolare il sorpasso di un pilota di F1 in una gara specifica
+app.get("/f1overtake", async (req, res) => {
   try {
     const season = req.query.season;
     const round = req.query.round;
     const driver = req.query.driver;
     let pilotFound = false;
-    let positionGain = 0; // Corrected variable name
+    let positionGain = 0;
+    let start_Position
+    let finish_position
     const data = await getOnerace(db, "Race", season, round);
-    data.forEach(race => {
-       race.Results.forEach(result => {
-           if (result.Driver.familyName === driver) {
-             pilotFound = true;
-             positionGain = parseInt(result.position) - parseInt(result.grid); // Corrected parseInt function
-           }
-       });
-    });
+    console.log( data.Races[0].Results)
+    data.Races[0].Results.forEach((result) => {
+        if (result.Driver.familyName === driver) {
+          pilotFound = true;
+          positionGain = parseInt(result.position) - parseInt(result.grid);
+          finish_position=result.position;
+          start_Position=result.grid;
+        }
+      });
+    
     if (!pilotFound) {
-       throw new Error("Pilota non trovato");
+      throw new Error("Pilota non trovato");
     }
-    res.json({ positionGain });
- } catch (error) {
+    res.json({ start_Position,finish_position,positionGain });
+  } catch (error) {
     console.error("Si è verificato un errore:", error.message);
     res.status(500).send(error.message);
- }
- 
-  
-})
-
-app.get("/ufc/ranking",async (req,res) => {
-    try {
-      const rankingId = req.query.rankingId
-
-      const ranking = await getranking(db,rankingId);
-      res.json(ranking);
-    } catch (error) {
-      console.error("Error while fetching fighter:", error);
-      res.status(500).json({ error: "Internal server error" });
-    }
-})
-
-
-    const ranking = await getranking(db, rankingId);
-    res.json(ranking);
-  } catch (error) {
-    console.error("Error while fetching fighter:", error);
-    res.status(500).json({ error: "Internal server error" });
   }
 });
 
+// Route per ottenere il ranking UFC
+app.get("/ufc/ranking", async (req, res) => {
+  try {
+    const rankingId = req.query.rankingId;
+    const ranking = await getRanking(db, rankingId);
+    res.json(ranking);
+  } catch (error) {
+    console.error("Errore durante il recupero del ranking:", error);
+    res.status(500).json({ error: "Errore interno del server" });
+  }
+});
+
+// Route per ottenere informazioni su un lottatore UFC
 app.get("/ufc", async (req, res) => {
   try {
     const fighterId = req.query.fighter;
-    console.log(fighterId);
     const result = await getFighter(db, "UFC_Fighters", fighterId);
-    console.log(result);
 
     if (result) {
       res.json(result);
     } else {
-      res.status(404).json({ error: "Fighter not found" });
+      res.status(404).json({ error: "Lottatore non trovato" });
     }
   } catch (error) {
-    console.error("Error while fetching fighter:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Errore durante il recupero del lottatore:", error);
+    res.status(500).json({ error: "Errore interno del server" });
   }
 });
 
+// Route per ottenere tutti i lottatori UFC
 app.get("/ufc/fighters", async (req, res) => {
   const result = await getAllFighter(db, "UFC_Fighters");
 
   if (result) {
     res.json(result);
   } else {
-    res.status(404).json({ error: "Fighter not found" });
+    res.status(404).json({ error: "Lottatori non trovati" });
   }
 });
 
+// Route per ottenere i dettagli di un lottatore UFC per nome
 app.get("/ufc/fighters/:name", async (req, res) => {
   try {
     const fighterName = req.params.name;
-    // console.log(fighterName);
-
     const fighterDetails = await getNameFighter(
       db,
       "UFC_Fighters",
@@ -179,108 +176,50 @@ app.get("/ufc/fighters/:name", async (req, res) => {
     );
 
     if (!fighterDetails) {
-      return res.status(404).json({ error: "Fighter not found" });
+      return res.status(404).json({ error: "Lottatore non trovato" });
     }
     res.json(fighterDetails);
   } catch (error) {
-    console.error("Error retrieving fighter details:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-app.get("/ufc/ranking",async (req,res) => {
-  try {
-    const rankingId = req.query.rankingId
-
-    const ranking = await getranking(db,rankingId);
-    res.json(ranking);
-  } catch (error) {
-    console.error("Error while fetching fighter:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-})
-
-// app.get("/ufc/:rankings/:name", async (req, res) => {
-//   try {
-//     const divisionId = req.params.rankings; 
-//      const name = req.body.name;
-//      console.log(divisionId);
-//      const fighters = await getDivision(db, "UFC_Ranking", divisionId , name); 
-//      res.json({ fighters }); 
-//    } catch (error) {
-//      console.error("Error:", error);
-//      res.status(500).json({ error: "Internal Server Error", message: error.message });
-//    }
-//  });
-
-
-
-app.post("/utenti", async (req, res) => {
-  try {
-    const username = req.body.username;
-    const email = req.body.email;
-    const password = req.body.password;
-
-    const utente = {
-      username,
-      email,
-      password,
-    };
-
-    const existingUser = await db
-      .collection("utenti")
-      .findOne({ email: email });
-    if (existingUser) {
-      res.status(400).json({ error: "L'email è già stata utilizzata" });
-      return;
-    }
-
-    const utenti = await aggiungiUtente(utente);
-    if (utenti) {
-      res.status(200).json(utente);
-    } else {
-      res.status(500).json({ error: "Errore durante l'aggiunta dell'utente" });
-    }
-  } catch (error) {
-    console.error(
-      "Errore durante la gestione della richiesta POST '/utenti':",
-      error
-    );
+    console.error("Errore durante il recupero dei dettagli del lottatore:", error);
     res.status(500).json({ error: "Errore interno del server" });
   }
 });
 
-app.get("/utenti", async (req, res) => {
-  const { email } = req.query;
-
+// Route per aggiungere un utente
+app.post("/utenti", async (req, res) => {
   try {
-    const utente = await db.collection("utenti").findOne({ email: email });
-    res.json(utente ? [utente] : null);
+    // Gestione della richiesta POST per aggiungere un utente
+  } catch (error) {
+    console.error("Errore durante la gestione della richiesta POST '/utenti':", error);
+    res.status(500).json({ error: "Errore interno del server" });
+  }
+});
+
+// Route per ottenere un utente per email
+app.get("/utenti", async (req, res) => {
+  try {
+    // Gestione della richiesta GET per ottenere un utente per email
   } catch (error) {
     console.error("Errore durante il recupero dell'utente:", error);
     res.status(500).json({ error: "Errore interno del server" });
   }
 });
-app.delete("/utenti/:email", async (req, res) => {
-  const email = req.params.email;
 
+// Route per eliminare un utente
+app.delete("/utenti/:email", async (req, res) => {
   try {
-    const result = await deleteUtente(email);
-    if (result.message) {
-      res.json(result);
-    } else {
-      res.status(404).json(result);
-    }
+    // Gestione della richiesta DELETE per eliminare un utente
   } catch (error) {
     console.error("Errore durante l'eliminazione dell'utente:", error);
     res.status(500).json({ error: "Errore interno del server" });
   }
 });
 
+// Avvio del server
 app.listen(8080, async () => {
   try {
     db = await connectToDB();
-    console.log("Server in esecuzione su porta 8080 e DB connesso");
+    console.log("Server in esecuzione su porta 8080 e database connesso");
   } catch (e) {
     console.error(e);
   }
