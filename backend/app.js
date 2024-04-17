@@ -100,31 +100,69 @@ app.get("/f1overtake", async (req, res) => {
   try {
     const season = req.query.season;
     const round = req.query.round;
-    const driver = req.query.driver;
-    let pilotFound = false;
-    let positionGain = 0;
-    let start_Position
-    let finish_position
     const data = await getOnerace(db, "Race", season, round);
-    console.log( data.Races[0].Results)
-    data.Races[0].Results.forEach((result) => {
-        if (result.Driver.familyName === driver) {
-          pilotFound = true;
-          positionGain = parseInt(result.position) - parseInt(result.grid);
-          finish_position=result.position;
-          start_Position=result.grid;
-        }
-      });
     
-    if (!pilotFound) {
-      throw new Error("Pilota non trovato");
-    }
-    res.json({ start_Position,finish_position,positionGain });
+    const overtakes = {}; // Oggetto per registrare i sorpassi di ogni pilota
+
+    data.Races[0].Results.forEach((result) => {
+      const driver = result.Driver.familyName;
+      const startPosition = parseInt(result.grid);
+      const finishPosition = parseInt(result.position);
+
+      console.log(`${driver}: start position = ${startPosition}, finish position = ${finishPosition}`);
+
+      const positionGain = startPosition - finishPosition;
+
+      
+      overtakes[driver] = overtakes[driver] ? overtakes[driver] + positionGain : positionGain;
+    });
+
+    
+    const topThreeOvertakes = Object.entries(overtakes)
+      .sort((a, b) => b[1] - a[1]) 
+      .slice(0, 3); 
+    res.json(topThreeOvertakes);
   } catch (error) {
     console.error("Si è verificato un errore:", error.message);
     res.status(500).send(error.message);
   }
 });
+
+
+app.get("/f1overtakes", async (req, res) => {
+  try {
+    const season = req.query.season;
+    const round = req.query.round;
+    const data = await getOnerace(db, "Race", season, round);
+    
+    const overtakes = {}; 
+
+    data.Races[0].Results.forEach((result) => {
+      if (result.status === "Finished") { 
+        const driver = result.Driver.familyName;
+        const startPosition = parseInt(result.grid);
+        const finishPosition = parseInt(result.position);
+
+   
+        const positionGain = Math.abs(startPosition - finishPosition);
+
+        
+        overtakes[driver] = overtakes[driver] ? overtakes[driver] + positionGain : positionGain;
+      }
+    });
+
+    
+    const topThreeOvertakes = Object.entries(overtakes)
+      .sort((a, b) => b[1] - a[1]) 
+      .slice(0, 3); 
+
+    res.json(topThreeOvertakes);
+  } catch (error) {
+    console.error("Si è verificato un errore:", error.message);
+    res.status(500).send(error.message);
+  }
+});
+
 
 // Route per ottenere il ranking UFC
 app.get("/ufc/ranking", async (req, res) => {
@@ -141,15 +179,16 @@ app.get("/ufc/ranking", async (req, res) => {
 });
 
 // Route per ottenere tutti i Ranking
-app.get("/ufc/allranking", async (req, res) => {
+app.get("/ufc/allranking",async (req ,res)=> {
   try {
-    const ranking = await getDivision(db, "UFC_Ranking");
-    res.json({ fighters: ranking }); 
+    const ranking = await getAll(db,"UFC_Ranking")
+    res.json(ranking)
   } catch (error) {
-    console.error("Error while retrieving ranking:", error);
-    res.status(500).json({ error: "Internal server error" });
+    console.error("Errore durante il recupero del ranking:", error);
+    res.status(500).json({ error: "Errore interno del server" });
   }
-});
+})
+
 // Route per ottenere informazioni su un lottatore UFC
 app.get("/ufc", async (req, res) => {
   try {

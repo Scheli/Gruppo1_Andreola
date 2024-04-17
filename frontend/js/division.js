@@ -1,4 +1,4 @@
-async function printDivisions(divisionId) {
+async function printDivisions() {
   try {
     const response = await fetch(`http://localhost:8080/ufc/allranking`, {
       headers: {
@@ -6,12 +6,12 @@ async function printDivisions(divisionId) {
       },
     });
 
-  
     const categoriesData = await response.json();
-    const categories = categoriesData.fighters.map((category) => category.id);
+    const categories = categoriesData.map((category) => category.categoryName); // Extract category names
+
     console.log(categories);
-    const container = document.getElementById("division"); // Assuming you have a container with id "division" in your HTML
-    const displayedDivisions = new Set(); // Use a set to keep track of displayed divisions
+    const container = document.getElementById("division");
+    const displayedDivisions = new Set();
 
     const divisionsContainer = document.createElement("div");
     divisionsContainer.classList.add("divisions"); // Apply the 'divisions' class to the parent div
@@ -20,11 +20,11 @@ async function printDivisions(divisionId) {
       if (!displayedDivisions.has(category)) {
         const divisionDiv = document.createElement("div");
         divisionDiv.classList.add("division");
-
         const divisionLink = document.createElement("a");
-        divisionLink.href = `category.html`;
-        // Open link in the same 
-        divisionLink.target = "_self";
+
+        // Encode category name into Base64 and append it to the URL
+        const encodedCategoryName = btoa(category);
+        divisionLink.href = `category.html#${encodedCategoryName}`;
 
         const divisionName = document.createElement("h2");
         divisionName.textContent = category;
@@ -43,8 +43,17 @@ async function printDivisions(divisionId) {
   }
 }
 
+window.onload = function () {
+  printDivisions();
+};
+
 const username = localStorage.getItem('username');
 
 if (!username) {
     window.location.replace("/frontend/login.html");
 }
+
+window.onload = function () {
+  printDivisions();
+};
+

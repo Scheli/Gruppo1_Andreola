@@ -39,8 +39,3 @@ async function OneDivision(divisionId) {
 window.onload = () => {
     OneDivision();
 }
-const username = localStorage.getItem('username');
-
-if (!username) {
-    window.location.replace("/frontend/login.html");
-}
