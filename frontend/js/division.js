@@ -7,32 +7,33 @@ async function printDivisions() {
     });
 
     const categoriesData = await response.json();
+    const categories = categoriesData.map((category) => category.categoryName); // Extract category names
+
+    console.log(categories);
     const container = document.getElementById("division");
     const displayedDivisions = new Set();
 
     const divisionsContainer = document.createElement("div");
-    divisionsContainer.classList.add("divisions");
+    divisionsContainer.classList.add("divisions"); // Apply the 'divisions' class to the parent div
 
-    for (const category of categoriesData) {
-      if (!displayedDivisions.has(category.name)) {
+    for (const category of categories) {
+      if (!displayedDivisions.has(category)) {
         const divisionDiv = document.createElement("div");
         divisionDiv.classList.add("division");
         const divisionLink = document.createElement("a");
-        divisionLink.href = "category.html";
-        divisionLink.addEventListener("click", function() {
-          const categoryName = category.name;
-          console.log("Storing category name:", categoryName);
-          sessionStorage.setItem("categoryName", categoryName);
-        });
+
+        // Encode category name into Base64 and append it to the URL
+        const encodedCategoryName = btoa(category);
+        divisionLink.href = `category.html#${encodedCategoryName}`;
 
         const divisionName = document.createElement("h2");
-        divisionName.textContent = category.name;
+        divisionName.textContent = category;
 
-        divisionLink.appendChild(divisionName);
-        divisionDiv.appendChild(divisionLink);
+        divisionLink.appendChild(divisionName); // Append divisionName to anchor element
+        divisionDiv.appendChild(divisionLink); // Append anchor element to divisionDiv
         divisionsContainer.appendChild(divisionDiv);
 
-        displayedDivisions.add(category.name);
+        displayedDivisions.add(category);
       }
     }
 
@@ -45,3 +46,4 @@ async function printDivisions() {
 window.onload = function () {
   printDivisions();
 };
+
