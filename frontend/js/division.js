@@ -7,33 +7,32 @@ async function printDivisions() {
     });
 
     const categoriesData = await response.json();
-    const categories = categoriesData.map((category) => category.categoryName); // Extract category names
-
-    console.log(categories);
     const container = document.getElementById("division");
     const displayedDivisions = new Set();
 
     const divisionsContainer = document.createElement("div");
-    divisionsContainer.classList.add("divisions"); // Apply the 'divisions' class to the parent div
+    divisionsContainer.classList.add("divisions");
 
-    for (const category of categories) {
-      if (!displayedDivisions.has(category)) {
+    for (const category of categoriesData) {
+      if (!displayedDivisions.has(category.name)) {
         const divisionDiv = document.createElement("div");
         divisionDiv.classList.add("division");
         const divisionLink = document.createElement("a");
-
-        // Encode category name into URL parameter and append it to the URL
-        const encodedCategoryName = encodeURIComponent(category);
-        divisionLink.href = `category.html?categoryName=${encodedCategoryName}`;
+        divisionLink.href = "category.html";
+        divisionLink.addEventListener("click", function() {
+          const categoryName = category.name;
+          console.log("Storing category name:", categoryName);
+          sessionStorage.setItem("categoryName", categoryName);
+        });
 
         const divisionName = document.createElement("h2");
-        divisionName.textContent = category;
+        divisionName.textContent = category.name;
 
-        divisionLink.appendChild(divisionName); // Append divisionName to anchor element
-        divisionDiv.appendChild(divisionLink); // Append anchor element to divisionDiv
+        divisionLink.appendChild(divisionName);
+        divisionDiv.appendChild(divisionLink);
         divisionsContainer.appendChild(divisionDiv);
 
-        displayedDivisions.add(category);
+        displayedDivisions.add(category.name);
       }
     }
 
