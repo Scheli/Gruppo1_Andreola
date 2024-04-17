@@ -7,32 +7,33 @@ async function printDivisions() {
     });
 
     const categoriesData = await response.json();
+    const categories = categoriesData.map((category) => category.categoryName); // Extract category names
+
+    console.log(categories);
     const container = document.getElementById("division");
     const displayedDivisions = new Set();
 
     const divisionsContainer = document.createElement("div");
-    divisionsContainer.classList.add("divisions");
+    divisionsContainer.classList.add("divisions"); // Apply the 'divisions' class to the parent div
 
-    for (const category of categoriesData) {
-      if (!displayedDivisions.has(category.name)) {
+    for (const category of categories) {
+      if (!displayedDivisions.has(category)) {
         const divisionDiv = document.createElement("div");
         divisionDiv.classList.add("division");
         const divisionLink = document.createElement("a");
-        divisionLink.href = "category.html";
-        divisionLink.addEventListener("click", function() {
-        console.log("category",category.name)
 
-          sessionStorage.setItem("categoryName", category.name);
-        });
+        // Encode category name into URL parameter and append it to the URL
+        const encodedCategoryName = encodeURIComponent(category);
+        divisionLink.href = `category.html?categoryName=${encodedCategoryName}`;
 
         const divisionName = document.createElement("h2");
-        divisionName.textContent = category.name;
+        divisionName.textContent = category;
 
-        divisionLink.appendChild(divisionName);
-        divisionDiv.appendChild(divisionLink);
+        divisionLink.appendChild(divisionName); // Append divisionName to anchor element
+        divisionDiv.appendChild(divisionLink); // Append anchor element to divisionDiv
         divisionsContainer.appendChild(divisionDiv);
 
-        displayedDivisions.add(category.name);
+        displayedDivisions.add(category);
       }
     }
 
