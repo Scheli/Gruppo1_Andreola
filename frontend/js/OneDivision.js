@@ -57,24 +57,3 @@ window.onload = async function () {
     console.error("Error fetching division data:", error);
   }
 };
-async function fetchFighterImage(fighterId) {
-  try {
-    const response = await fetch(`http://localhost:8080/ufc/fighters/${fighterId}`, {
-      headers: {
-        Accept: "application/json",
-      },
-    });
-    
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const fighterData = await response.json();
-    console.log(fighterData)
-    return fighterData.imgUrl;
-  } catch (error) {
-    console.error("Error fetching fighter image:", error);
-    return null;
-  }
-}

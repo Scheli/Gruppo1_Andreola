@@ -13,7 +13,50 @@
 
         </div>
     </div>
-
+    <script type="module">
+        import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+       Chatbot.init({
+           chatflowid: "51a03c2d-62c6-42ef-97ad-f4e936da93f2",
+           apiHost: "https://statsphere.onrender.com",
+         chatflowConfig: {
+           // topK: 2
+         },
+         theme: {
+     "button": {
+       "backgroundColor": "#ffd500",
+       "right": 20,
+       "bottom": 20,
+       "size": "medium",
+       "iconColor": "#000000",
+       "customIconSrc": "https://cdn-icons-png.flaticon.com/512/6134/6134346.png"
+     },
+     "chatWindow": {
+       "welcomeMessage": "Ciao! io sono un  AI progettata per rispondere alle tue domande riguardanti StatSphere,sentiti pure di consultarmi quando vuoi!",
+       "backgroundColor": "#1f1f1f",
+       "fontSize": 16,
+       "poweredByTextColor": "#ffffff",
+       "botMessage": {
+         "backgroundColor": "#ffffff",
+         "textColor": "#000000",
+         "showAvatar": true,
+         "avatarSrc": "https://cdn-icons-png.flaticon.com/512/6134/6134346.png"
+       },
+       "userMessage": {
+         "backgroundColor": "#ffffff",
+         "textColor": "#000000",
+         "showAvatar": true,
+         "avatarSrc": "https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+       },
+       "textInput": {
+         "placeholder": "Inserisci la tua domanda",
+         "backgroundColor": "#ffffff",
+         "textColor": "#303235",
+         "sendButtonColor": "#3B81F6"
+       }
+     }
+   }
+       })
+     </script>
     
     <script src="/frontend/js/OneFighter.js"></script>
 </body>

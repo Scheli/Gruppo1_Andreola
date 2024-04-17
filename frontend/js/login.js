@@ -7,21 +7,25 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     const response = await fetch(`http://localhost:8080/utenti?email=${email}`);
     const data = await response.json();
 
-    if (response.ok && data.length > 0 && data[0].password === password) {
-      localStorage.setItem('userEmail', email);
-      
-      const username = data[0].username;
-      localStorage.setItem('username', username);
-
-      window.location.replace("/frontend/index.html");
+    if (response.ok) {
+      if (data.length > 0) {
+        if (data[0].password === password) {
+          localStorage.setItem('userEmail', email);
+          const username = data[0].username;
+          localStorage.setItem('username', username);
+          window.location.replace("/frontend/index.html");
+        } else {
+          showError("La password inserita non è corretta. Riprova.");
+        }
+      } 
     } else {
-      showError("La password inserita non è corretta. Riprova.");
+      showError("Errore durante la richiesta al server. Riprova più tardi.");
     }
   } catch (error) {
     console.error("Errore durante il login:", error);
+    showError("Email non esistente nel database.");
   }
 });
-
 
 function showError(message) {
   const errorMessageElement = document.getElementById('errorMessage');

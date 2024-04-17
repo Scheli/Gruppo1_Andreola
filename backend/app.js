@@ -100,35 +100,33 @@ app.get("/f1overtake", async (req, res) => {
   try {
     const season = req.query.season;
     const round = req.query.round;
+    const driver = req.query.driver;
+    let pilotFound = false;
+    let positionGain = 0;
+    let start_Position
+    let finish_position
     const data = await getOnerace(db, "Race", season, round);
-    
-    const overtakes = {}; // Oggetto per registrare i sorpassi di ogni pilota
-
+    console.log( data.Races[0].Results)
     data.Races[0].Results.forEach((result) => {
-      const driver = result.Driver.familyName;
-      const startPosition = parseInt(result.grid);
-      const finishPosition = parseInt(result.position);
-
-      console.log(`${driver}: start position = ${startPosition}, finish position = ${finishPosition}`);
-
-      const positionGain = startPosition - finishPosition;
-
-      
-      overtakes[driver] = overtakes[driver] ? overtakes[driver] + positionGain : positionGain;
-    });
-
+        if (result.Driver.familyName === driver) {
+          pilotFound = true;
+          positionGain = parseInt(result.position) - parseInt(result.grid);
+          finish_position=result.position;
+          start_Position=result.grid;
+        }
+      });
     
-    const topThreeOvertakes = Object.entries(overtakes)
-      .sort((a, b) => b[1] - a[1]) 
-      .slice(0, 3); 
-    res.json(topThreeOvertakes);
+    if (!pilotFound) {
+      throw new Error("Pilota non trovato");
+    }
+    res.json({ start_Position,finish_position,positionGain });
   } catch (error) {
     console.error("Si è verificato un errore:", error.message);
     res.status(500).send(error.message);
   }
 });
 
-
+// route per calcolare i top 3 piloti con più sorpassi
 app.get("/f1overtakes", async (req, res) => {
   try {
     const season = req.query.season;
@@ -162,7 +160,6 @@ app.get("/f1overtakes", async (req, res) => {
     res.status(500).send(error.message);
   }
 });
-
 
 // Route per ottenere il ranking UFC
 app.get("/ufc/ranking", async (req, res) => {
@@ -241,16 +238,47 @@ app.get("/ufc/fighters/:name", async (req, res) => {
 // Route per aggiungere un utente
 app.post("/utenti", async (req, res) => {
   try {
+    const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
+
+    const utente = {
+      username,
+      email,
+      password,
+    };
+
+    const existingUser = await db
+      .collection("utenti")
+      .findOne({ email: email });
+    if (existingUser) {
+      res.status(400).json({ error: "L'email è già stata utilizzata" });
+      return;
+    }
+
+    const utenti = await aggiungiUtente(utente);
+    if (utenti) {
+      res.status(200).json(utente);
+    } else {
+      res.status(500).json({ error: "Errore durante l'aggiunta dell'utente" });
+    }
     // Gestione della richiesta POST per aggiungere un utente
   } catch (error) {
+    console.error(
+      "Errore durante la gestione della richiesta POST '/utenti':",
+      error
+    );
     console.error("Errore durante la gestione della richiesta POST '/utenti':", error);
     res.status(500).json({ error: "Errore interno del server" });
   }
 });
 
-// Route per ottenere un utente per email
 app.get("/utenti", async (req, res) => {
+  const { email } = req.query;
+
   try {
+    const utente = await db.collection("utenti").findOne({ email: email });
+    res.json(utente ? [utente] : null);
     // Gestione della richiesta GET per ottenere un utente per email
   } catch (error) {
     console.error("Errore durante il recupero dell'utente:", error);
@@ -260,14 +288,20 @@ app.get("/utenti", async (req, res) => {
 
 // Route per eliminare un utente
 app.delete("/utenti/:email", async (req, res) => {
+  const email = req.params.email;
   try {
+    const result = await deleteUtente(email);
+    if (result.message) {
+      res.json(result);
+    } else {
+      res.status(404).json(result);
+    }
     // Gestione della richiesta DELETE per eliminare un utente
   } catch (error) {
     console.error("Errore durante l'eliminazione dell'utente:", error);
     res.status(500).json({ error: "Errore interno del server" });
   }
 });
-
 // Avvio del server
 app.listen(8080, async () => {
   try {

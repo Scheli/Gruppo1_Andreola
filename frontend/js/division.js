@@ -47,3 +47,13 @@ window.onload = function () {
   printDivisions();
 };
 
+const username = localStorage.getItem('username');
+
+if (!username) {
+    window.location.replace("/frontend/login.html");
+}
+
+window.onload = function () {
+  printDivisions();
+};
+
