@@ -113,7 +113,7 @@ p.utente a {
   unicode-bidi: isolate;
 }
 
-.fight a {
+a {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -123,12 +123,17 @@ p.utente a {
   text-decoration: none;
 }
 
-.fight a h2 {
+.fight {
   font-weight: bold;
   gap: 12px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  color: white;
 }
-
+div{
+  text-align: center;
+  justify-content: center;
+  font-weight: bold;
+}
 

@@ -1,4 +1,4 @@
-async function listaFighters(divisionId) {
+async function listaFighters() {
   try {
     const response = await fetch("http://localhost:8080/ufc/fighters", {
       headers: {
@@ -14,29 +14,26 @@ async function listaFighters(divisionId) {
 
     container.innerHTML = "";
 
-    fighters.forEach((fighter) => {
-      const divElement = document.createElement("div");
-      divElement.classList.add("fighter");
-
-      const nameElement = document.createElement("h2");
-      nameElement.textContent = fighter.name;
-
-      // Aggiungi qui il gestore degli eventi click
-      nameElement.addEventListener("click", () => {
-        window.location.href = `fighter-details.html?name=${encodeURIComponent(
-          fighter.name
-        )}`;
-      });
-
-      divElement.appendChild(nameElement);
-      container.appendChild(divElement);
-    });
+    renderFighters(fighters, container); // Initial rendering
 
     const searchInput = document.getElementById("searchInput");
+
+    // Clear placeholder text when the input is focused
+    searchInput.addEventListener("focus", () => {
+      searchInput.placeholder = "";
+    });
+
+    // Restore placeholder text when the input loses focus and it's empty
+    searchInput.addEventListener("blur", () => {
+      if (!searchInput.value.trim()) {
+        searchInput.placeholder = "Search fighters...";
+      }
+    });
+
     searchInput.addEventListener("input", () => {
       const searchValue = searchInput.value.trim().toLowerCase();
       const filteredFighters = fighters.filter((fighter) =>
-        fighter.name.toLowerCase().includes(searchValue)
+        fighter.name.toLowerCase().startsWith(searchValue)
       );
       renderFighters(filteredFighters, container);
     });
@@ -45,33 +42,33 @@ async function listaFighters(divisionId) {
   }
 }
 
-// function renderFighters(fighters, container) {
-//   container.innerHTML = "";
+function renderFighters(fighters, container) {
+  container.innerHTML = "";
 
-//   fighters.forEach((fighter) => {
-//     const divElement = document.createElement("div");
-//     divElement.classList.add("fighter");
+  fighters.forEach((fighter) => {
+    const divElement = document.createElement("div");
+    divElement.classList.add("fighter");
 
-//     const nameElement = document.createElement("h2");
-//     nameElement.textContent = fighter.name;
+    const nameElement = document.createElement("h2");
+    nameElement.textContent = fighter.name;
 
-//     // Aggiungi qui il gestore degli eventi click
-//     nameElement.addEventListener("click", () => {
-//       window.location.href = `fighter-details.html?name=${encodeURIComponent(
-//         fighter.name
-//       )}`;
-//     });
+    // Event listener for fighter details
+    nameElement.addEventListener("click", () => {
+      window.location.href = `fighter-details.html?name=${encodeURIComponent(
+        fighter.name
+      )}`;
+    });
 
-//     divElement.appendChild(nameElement);
-//     container.appendChild(divElement);
-//   });
-// }
+    divElement.appendChild(nameElement);
+    container.appendChild(divElement);
+  });
+}
 
 window.onload = function () {
   listaFighters();
 };
-const username = localStorage.getItem('username');
 
+const username = localStorage.getItem('username');
 if (!username) {
     window.location.replace("/frontend/login.html");
 }
